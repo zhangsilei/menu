@@ -54,61 +54,100 @@
 
 		// 一级菜单样式
 		firstLinks.css({
-				fontSize: settings.firstFontSize,
-				color: settings.firstFontColor,
-				backgroundColor: settings.firstBgColor
-			})
-			.hover(function() {
-				$(this).css({
-					color: settings.firstHoverFontColor,
-					backgroundColor: settings.firstHoverBgColor
-				})
-			}, function() {
-				$(this).css({
-					color: settings.firstFontColor,
-					backgroundColor: settings.firstBgColor
-				})
-			})
-			.parent('li').each(function(index, el) {
-				$(this).width($(this).width() + settings.itemWidth); // 一级菜单宽度
-			})
-			.not(firstMenu.children('li').first()).css({
-				marginLeft: settings.itemMargin + 'px' // 菜单间隙
-			})
+
+			fontSize: settings.firstFontSize,
+			color: settings.firstFontColor,
+			backgroundColor: settings.firstBgColor
+
+		}).parent('li').each(function(index, el) {
+
+			$(this).width($(this).width() + settings.itemWidth); // 一级菜单宽度
+
+		}).not(firstMenu.children('li').first()).css({
+
+			marginLeft: settings.itemMargin + 'px' // 菜单间隙
+
+		});
 
 		// 二级菜单样式 
-		if (firstMenu.find('ul').length > 0) {
+		if (firstMenu.find('ul').length) {
+
 			sencondLinks.css({
 				fontSize: settings.secondFontSize,
 				color: settings.secondFontColor,
 				backgroundColor: settings.secondBgColor
-			}).hover(function() {
-				$(this).css({
-					color: settings.secondHoverFontColor,
-					backgroundColor: settings.secondHoverBgColor
-				});
-			}, function() {
-				$(this).css({
-					color: settings.secondFontColor,
-					backgroundColor: settings.secondBgColor
-				});
 			});
+
 			// 二级菜单宽度
 			$.each(firstLinks, function(index, val) {
 				var secondMenu = $(this).next('ul');
+
 				if (secondMenu.width() + settings.itemWidth < firstLinks.width()) {
 					secondMenu.width(firstLinks.width());
 				} else {
 					secondMenu.width(secondMenu.width() + settings.itemWidth);
 				}
 			});
+
+		}
+
+		if (!!navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) { // 在移动端打开页面
+
+			var eventType = 'hover';
+
+			try {
+				if (FastClick) {
+					FastClick.attach(document.body); // 支持fastclick
+					eventType = 'click';
+				}
+			} catch (e) {
+				console.log('fastclick.js is not found.You are still using \'click\'');
+			}
+
+			if (firstMenu.find('ul').length) {
+
+				if (eventType == 'hover') {
+					setHoverCss();
+				} else if (eventType == 'click') {
+
+					firstLinks.on('click', function() {
+						var $this = $(this),
+							secondMenu = $this.next('ul');
+						if (secondMenu.is(':hidden')) {
+							secondMenu.show();
+						} else if (secondMenu.is(':visible')) {
+							secondMenu.hide();
+						}
+					});
+
+					sencondLinks.on('click', function() {
+						var $this = $(this),
+							secondMenu = $this.parent().parent();
+						if (secondMenu.is(':hidden')) {
+							secondMenu.show();
+						} else if (secondMenu.is(':visible')) {
+							secondMenu.hide();
+						}
+					})
+
+				}
+
+			}
+		} else { // 在PC端打开页面
+			if (firstMenu.find('ul').length) {
+
+				setHoverCss();
+
+			}
+
 		}
 
 		/**
 		 * 设置默认主题颜色
+		 * @description 自带的配色方案是一、二级菜单保持相同颜色
+		 * @param {String} fontColor 字体颜色
+		 * @param {String} bgColor   背景颜色
 		 */
-
-		// 自带的配色方案是一、二级菜单保持相同颜色
 		function setThemeColor(fontColor, bgColor) {
 			firstLinks.css({
 				color: fontColor,
@@ -120,9 +159,14 @@
 			});
 		}
 
-		// 设置鼠标滑过颜色
+		/**
+		 * 设置鼠标滑过颜色
+		 * @param {String} fontColor 字体颜色
+		 * @param {String} bgColor   背景颜色
+		 */
 		function setHoverBgColor(fontColor, bgColor) {
 			var normalFontColor, normalBgColor;
+
 			firstMenu.find('a').hover(function() {
 				normalFontColor = $(this).css('color');
 				normalBgColor = $(this).css('backgroundColor');
@@ -134,6 +178,37 @@
 				$(this).css({
 					color: normalFontColor,
 					backgroundColor: normalBgColor
+				});
+			});
+		}
+
+		/**
+		 * 设置鼠标悬浮样式
+		 */
+		function setHoverCss() {
+			// 一级菜单样式
+			firstLinks.hover(function() {
+				$(this).css({
+					color: settings.firstHoverFontColor,
+					backgroundColor: settings.firstHoverBgColor
+				})
+			}, function() {
+				$(this).css({
+					color: settings.firstFontColor,
+					backgroundColor: settings.firstBgColor
+				})
+			});
+
+			// 二级菜单样式
+			sencondLinks.hover(function() {
+				$(this).css({
+					color: settings.secondHoverFontColor,
+					backgroundColor: settings.secondHoverBgColor
+				});
+			}, function() {
+				$(this).css({
+					color: settings.secondFontColor,
+					backgroundColor: settings.secondBgColor
 				});
 			});
 		}
