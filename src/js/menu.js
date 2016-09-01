@@ -39,16 +39,17 @@
 			theme: 'blue'
 		}
 		var settings = $.extend({}, defaults, options);
+		var isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);
 
 		// 设置默认主题
 		switch (settings.theme) {
 			case 'blue':
 				setThemeColor(themeColor.blue.fontColor, themeColor.blue.bgColor);
-				setHoverBgColor(themeColor.blue.hoverFontColor, themeColor.blue.hoverBgColor);
+				!isMobile && setHoverBgColor(themeColor.blue.hoverFontColor, themeColor.blue.hoverBgColor);
 				break;
 			case 'dark':
 				setThemeColor(themeColor.dark.fontColor, themeColor.dark.bgColor);
-				setHoverBgColor(themeColor.dark.hoverFontColor, themeColor.dark.hoverBgColor);
+				!isMobile && setHoverBgColor(themeColor.dark.hoverFontColor, themeColor.dark.hoverBgColor);
 				break;
 		}
 
@@ -91,7 +92,7 @@
 
 		}
 
-		if (!!navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) { // 在移动端打开页面
+		if (isMobile) { // 在移动端打开页面
 
 			var eventType = 'hover';
 
@@ -135,9 +136,7 @@
 			}
 		} else { // 在PC端打开页面
 			if (firstMenu.find('ul').length) {
-
 				setHoverCss();
-
 			}
 
 		}
