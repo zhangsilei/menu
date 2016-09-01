@@ -26,7 +26,7 @@
 	- `itemWidth: 20`（菜单宽度：除去自身内容的宽度之外，附加的横向宽度） 
   	- `theme: 'blue'`（默认主题：blue | dark）  
 
-3. [效果展示](http://dreamon324.github.io/menu/src/demo.html)
+3. [效果展示](http://dreamon324.github.io/menu/demo.html)
 
 ### 二、使用说明
 
@@ -34,7 +34,7 @@
 
 2. 引入 menu 样式  
 	```html
-	<link rel="stylesheet" href="/path/menu.css"/>
+	<link rel="stylesheet" href="/path/menu.css"/> 
 	```
   
 3. 在 jQuery 之后引入 menu 插件  
