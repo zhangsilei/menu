@@ -34,13 +34,13 @@
 
 2. 引入 menu 样式  
 	```html
-	<link rel="stylesheet" href="/path/menu.min.css"/>
+	<link rel="stylesheet" href="/path/menu.css"/>
 	```
   
 3. 在 jQuery 之后引入 menu 插件  
 	```html
 	<script src="/path/jquery-1.12.2.min.js"></script>
-	<script src="/path/menu.min.js"></script>
+	<script src="/path/menu.js"></script>
 	```
 
 4. 粘贴html代码块  
