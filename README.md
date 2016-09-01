@@ -3,7 +3,7 @@
 #### 一、插件说明
 
 1. menu是一款基于jQuery的轻量级菜单插件，可以根据喜好进行个性化的UI定制。  
-兼容性：支持Chrome、Safari、Firefox、IE8+（暂不支持IE7及以下版本）。
+兼容性：支持Chrome、Safari、Firefox、IE7+。
 
 2. 参数说明  
   - 一级菜单参数示例
