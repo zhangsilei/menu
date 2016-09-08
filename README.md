@@ -1,4 +1,9 @@
-## menu Plugin V 1.0 
+## menu Plugin V 0.11
+
+### V 0.11版本说明：
+
+1. 支持响应式布局，可在移动端使用。
+2. 默认使用fastclick.js，若页面中为引入fastclick.js也不影响功能，只是会降级到click事件，会有300ms延迟你懂的。
 
 ### 一、插件说明
 
@@ -30,7 +35,7 @@
 
 ### 二、使用说明
 
-1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.1.zip)
+1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.11.zip)
 
 2. 引入 menu 样式  
 	```html
