@@ -36,7 +36,7 @@
 
 ### 二、使用说明
 
-1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.11.zip)
+1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.12.zip)
 
 2. 引入 menu 样式  
 	```html
