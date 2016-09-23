@@ -1,16 +1,17 @@
-## menu Plugin V 0.11
+## menu Plugin V 0.12
 
-### V 0.11版本说明：
+### V 0.12版本说明：
+1. 修复鼠标滑到二级菜单时，当前一级菜单背景色丢失的问题
+
+### 一、插件说明
 
 1. 支持响应式布局，可在移动端使用。
 2. 默认使用fastclick.js，若页面中未引入fastclick.js也不影响功能，只是会降级到click事件，会有300ms延迟你懂的。
 
-### 一、插件说明
-
-1. menu是一款基于jQuery的轻量级菜单插件，可以根据喜好进行个性化的UI定制。  
+3. menu是一款基于jQuery的轻量级菜单插件，可以根据喜好进行个性化的UI定制。  
 兼容性：支持Chrome、Safari、Firefox、IE7+。
 
-2. 参数说明  
+4. 参数说明  
 
 	**一级菜单参数示例：**
     - `firstFontSize: '16px'`（字体大小）  
@@ -31,7 +32,7 @@
 	- `itemWidth: 20`（菜单宽度：除去自身内容的宽度之外，附加的横向宽度） 
   	- `theme: 'blue'`（默认主题：blue | dark）  
 
-3. [效果展示](http://dreamon324.github.io/menu/demo.html)
+5. [效果展示](http://dreamon324.github.io/menu/demo.html)
 
 ### 二、使用说明
 
