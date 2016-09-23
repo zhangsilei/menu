@@ -2,7 +2,8 @@
 (function($) {
 	$.fn.menu = function(options) {
 		// 自带主题: dark(黑底白字)、blue(蓝底白字)
-		var themeColor = {
+		var themeColor;
+		themeColor = {
 			blue: {
 				fontColor: '#fff',
 				bgColor: '#0E90D2',
@@ -15,10 +16,11 @@
 				hoverFontColor: '#fff',
 				hoverBgColor: '#000'
 			}
-		}
-		var firstMenu = this.children('ul');
-		var firstLinks = firstMenu.children('li').children('a');
-		var sencondLinks = firstMenu.find('ul').find('a');
+		};
+		var $firstMenu = this.children('ul'),
+			$firstLinks = $firstMenu.children('li').children('a'),
+			$sencondLinks = $firstMenu.find('ul').find('a'),
+			hasSecond = $firstMenu.find('ul').length;
 
 		var defaults = {
 			firstFontSize: '16px',
@@ -37,7 +39,8 @@
 			itemMargin: 1,
 
 			theme: 'blue'
-		}
+		};
+
 		var settings = $.extend({}, defaults, options);
 		var isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);
 
@@ -54,7 +57,7 @@
 		}
 
 		// 一级菜单样式
-		firstLinks.css({
+		$firstLinks.css({
 
 			fontSize: settings.firstFontSize,
 			color: settings.firstFontColor,
@@ -62,31 +65,32 @@
 
 		}).parent('li').each(function(index, el) {
 
-			$(this).width($(this).width() + settings.itemWidth); // 一级菜单宽度
+			var $this = $(this);
+			$this.width($this.width() + settings.itemWidth); // 一级菜单宽度
 
-		}).not(firstMenu.children('li').first()).css({
+		}).not($firstMenu.children('li').first()).css({
 
 			marginLeft: settings.itemMargin + 'px' // 菜单间隙
 
 		});
 
-		// 二级菜单样式 
-		if (firstMenu.find('ul').length) {
+		// 二级菜单样式
+		if (hasSecond) {
 
-			sencondLinks.css({
+			$sencondLinks.css({
 				fontSize: settings.secondFontSize,
 				color: settings.secondFontColor,
 				backgroundColor: settings.secondBgColor
 			});
 
 			// 二级菜单宽度
-			$.each(firstLinks, function(index, val) {
-				var secondMenu = $(this).next('ul');
+			$.each($firstLinks, function(index, val) {
+				var $secondMenu = $(this).next('ul');
 
-				if (secondMenu.width() + settings.itemWidth < firstLinks.width()) {
-					secondMenu.width(firstLinks.width());
+				if ($secondMenu.width() + settings.itemWidth < $firstLinks.width()) {
+					$secondMenu.width($firstLinks.width());
 				} else {
-					secondMenu.width(secondMenu.width() + settings.itemWidth);
+					$secondMenu.width($secondMenu.width() + settings.itemWidth);
 				}
 			});
 
@@ -105,29 +109,29 @@
 				console.log('fastclick.js is not found.You are still using \'click\'');
 			}
 
-			if (firstMenu.find('ul').length) {
+			if (hasSecond) {
 
 				if (eventType == 'hover') {
 					setHoverCss();
 				} else if (eventType == 'click') {
 
-					firstLinks.on('click', function() {
+					$firstLinks.on('click', function() {
 						var $this = $(this),
-							secondMenu = $this.next('ul');
-						if (secondMenu.is(':hidden')) {
-							secondMenu.show();
-						} else if (secondMenu.is(':visible')) {
-							secondMenu.hide();
+							$secondMenu = $this.next('ul');
+						if ($secondMenu.is(':hidden')) {
+							$secondMenu.show();
+						} else if ($secondMenu.is(':visible')) {
+							$secondMenu.hide();
 						}
 					});
 
-					sencondLinks.on('click', function() {
+					$sencondLinks.on('click', function() {
 						var $this = $(this),
-							secondMenu = $this.parent().parent();
-						if (secondMenu.is(':hidden')) {
-							secondMenu.show();
-						} else if (secondMenu.is(':visible')) {
-							secondMenu.hide();
+							$secondMenu = $this.parent().parent();
+						if ($secondMenu.is(':hidden')) {
+							$secondMenu.show();
+						} else if ($secondMenu.is(':visible')) {
+							$secondMenu.hide();
 						}
 					})
 
@@ -135,7 +139,7 @@
 
 			}
 		} else { // 在PC端打开页面
-			if (firstMenu.find('ul').length) {
+			if (hasSecond) {
 				setHoverCss();
 			}
 
@@ -148,11 +152,11 @@
 		 * @param {String} bgColor   背景颜色
 		 */
 		function setThemeColor(fontColor, bgColor) {
-			firstLinks.css({
+			$firstLinks.css({
 				color: fontColor,
 				backgroundColor: bgColor
 			});
-			sencondLinks.css({
+			$sencondLinks.css({
 				color: fontColor,
 				backgroundColor: bgColor
 			});
@@ -166,10 +170,11 @@
 		function setHoverBgColor(fontColor, bgColor) {
 			var normalFontColor, normalBgColor;
 
-			firstMenu.find('a').hover(function() {
-				normalFontColor = $(this).css('color');
-				normalBgColor = $(this).css('backgroundColor');
-				$(this).css({
+			$firstMenu.find('a').hover(function() {
+				var $this = $(this),
+					normalFontColor = $this.css('color');
+				normalBgColor = $this.css('backgroundColor');
+				$this.css({
 					color: fontColor,
 					backgroundColor: bgColor
 				});
@@ -186,7 +191,7 @@
 		 */
 		function setHoverCss() {
 			// 一级菜单样式
-			firstLinks.hover(function() {
+			$firstLinks.hover(function() {
 				$(this).css({
 					color: settings.firstHoverFontColor,
 					backgroundColor: settings.firstHoverBgColor
@@ -199,19 +204,29 @@
 			});
 
 			// 二级菜单样式
-			sencondLinks.hover(function() {
-				$(this).css({
+			$sencondLinks.hover(function() {
+				var $this = $(this);
+				$this.css({
 					color: settings.secondHoverFontColor,
 					backgroundColor: settings.secondHoverBgColor
 				});
+				$this.parents('ul').first().prev().css({
+					color: settings.firstHoverFontColor,
+					backgroundColor: settings.firstHoverBgColor
+				});
 			}, function() {
-				$(this).css({
+				var $this = $(this);
+				$this.css({
 					color: settings.secondFontColor,
 					backgroundColor: settings.secondBgColor
+				});
+				$this.parents('ul').first().prev().css({
+					color: settings.firstFontColor,
+					backgroundColor: settings.firstBgColor
 				});
 			});
 		}
 
 		return this;
 	}
-})(jQuery)
+})(jQuery);
