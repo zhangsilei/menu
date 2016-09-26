@@ -19,7 +19,7 @@
     - `firstBgColor: '#0E90D2'`（背景颜色）
     - `firstHoverFontColor: '#fff'`（鼠标悬浮字体颜色）
     - `firstHoverBgColor: '#0C79B1'`（鼠标悬浮背景颜色）
-    - `itemMargin: 1`（同级菜单间的间隙）
+    - `itemMargin: 1`（同级菜单间的间隙，默认为1px）
     
     **二级菜单参数示例：**
     - `secondFontSize: '16px'`（字体大小）  
@@ -27,10 +27,18 @@
     - `secondBgColor: '#0E90D2'`（背景颜色）
     - `secondHoverFontColor: '#fff'`（鼠标悬浮字体颜色）
     - `secondHoverBgColor: '#0C79B1'`（鼠标悬浮背景颜色）
-    
+     
 	**一、二级公用参数示例：**
-	- `itemWidth: 20`（菜单宽度：除去自身内容的宽度之外，附加的横向宽度） 
-  	- `theme: 'blue'`（默认主题：blue | dark）  
+		- `height:（菜单宽高度，默认40px）  
+		- `itemWidth: 20`（菜单宽度：除去自身内容的宽度之外，附加的横向宽度，默认20px） 
+  	- `theme: 'blue'`（主题：blue | dark，默认为blue）  
+  	- `menuIconColor: '#000'`（小屏幕下菜单按钮的颜色，默认黑色）
+  	- `menuIconMaskColor: '#000'`（小屏幕下点击菜单按钮后的遮罩层颜色，默认黑色）
+  	- `menuFirstListBgColor: '#000'`（小屏幕下一级菜单背景颜色，默认黑色）
+  	- `menuFirstListFontColor: '#000'`（小屏幕下一级菜单字体颜色，默认白色）
+  	- `menuSecondListBgColor: '#000'`（小屏幕下二级菜单背景颜色，默认#222）
+  	- `menuSecondListFontColor: '#000'`（小屏幕下二级菜单字体颜色，默认白色）
+  	- `closeIconColor: '#fff'`（小屏幕下关闭按钮颜色，默认白色）
 
 5. [效果展示](http://dreamon324.github.io/menu/demo.html)
 

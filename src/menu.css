@@ -82,12 +82,12 @@
   top: 0;
   left: 0;
   width: 100%;
-  color: #fff;
+  /*color: #fff;*/
 }
 
 .ve-menu-mobile li {
   width: 100%;
-  color: #fff;
+  /*color: #fff;*/
 }
 
 .ve-menu-mobile li a {
@@ -101,7 +101,7 @@
 }
 
 .ve-menu-mobile  ul li a {
-  background: #222;
+  /*background: #222;*/
 }
 
 .ve-menu-close {

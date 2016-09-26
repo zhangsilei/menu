@@ -40,7 +40,12 @@
 			itemMargin: 1,
 			theme: 'blue',
 			menuIconColor: '#000',
-			menuIconMaskColor: '#000'
+			menuMaskColor: '#000',
+			menuFirstListBgColor: '#000',
+			menuFirstListFontColor: '#fff',
+			menuSecondListBgColor: '#222',
+			menuSecondListFontColor: '#fff',
+			closeIconColor: '#fff'
 		};
 
 		var settings = $.extend({}, defaults, options);
@@ -214,20 +219,27 @@
 					$menuIcon.css('marginTop', (($firstLinks.height() - $menuIcon.height()) / 2)).on('click', function() {
 						// 创建遮罩和一、二级菜单
 						$('<div class="ve-menu-mask"></div>')
-							.css('background', settings.menuIconMaskColor).appendTo('.ve-menu')
+							.css('background', settings.menuMaskColor).appendTo('.ve-menu')
 							.after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
 							.next().find('ul, li, a').removeAttr('style');
 						// 菜单事件
 						$('.ve-menu-mobile').children('li').on('click', function() {
 							$(this).find('ul').toggle().on('click', function(event) {
 								return false;
-							})
+							}).find('a').css({ //  一级菜单样式
+								background: settings.menuSecondListBgColor,
+								color: settings.menuSecondListFontColor
+							});
+						}).children('a').css({ // 二级菜单样式
+							background: settings.menuFirstListBgColor,
+							color: settings.menuFirstListFontColor
 						});
-						// 关闭事件
-						$('.ve-menu-close').children('div').on('click', function() {
-							$('.ve-menu-mask').hide();
-							$('.ve-menu-mobile').hide();
-						})
+						// 关闭按钮样式、事件
+						$('.ve-menu-close').css('color', settings.closeIconColor)
+							.children('div').on('click', function() {
+								$('.ve-menu-mask').hide();
+								$('.ve-menu-mobile').hide();
+							});
 					}).children('div').css('background', settings.menuIconColor);
 				} else {
 					$firstMenu.hide();
