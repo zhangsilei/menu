@@ -1,13 +1,13 @@
 /* base css */
 
-.nav-menu ul {
+.ve-menu ul {
   font-family: 'Arial', 'Microsoft YaHei', '黑体', '宋体', sans-serif;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.nav-menu a {
+.ve-menu a {
   float: left;
   display: inline-block;
   /*overflow: hidden;*/
@@ -16,33 +16,107 @@
   /*white-space: nowrap;*/
   text-decoration: none;
   /*text-overflow: ellipsis;*/
+  color: #fff;
 }
 
 
 /* 一级菜单 */
 
-.nav-menu > ul > li {
-  line-height: 40px;
+.ve-menu > .ve-menu-pc > li {
+  /*line-height: 40px;*/
   position: relative;
   float: left;
-  height: 40px;
+  /*height: 40px;*/
   cursor: pointer;
 }
 
-.nav-menu > ul > li:hover ul {
+.ve-menu > .ve-menu-pc > li:hover ul {
   display: block;
 }
 
 
 /* 二级菜单 */
 
-.nav-menu > ul > li > ul {
+.ve-menu > .ve-menu-pc > li > ul {
   position: absolute;
-  top: 40px;
+  /*top: 40px;*/
   left: 0;
   display: none;
 }
 
-.nav-menu > ul > li > ul > li {
+.ve-menu > .ve-menu-pc > li > ul > li {
   height: 40px;
 }
+
+/* 移动端下的菜单 */
+
+/* 菜单按钮 */
+.ve-menu-icon {
+  float: right;
+  width: 20px;
+  height: 21px;
+  overflow: hidden;
+  /* 垂直居中用js动态计算 */
+}
+
+.ve-menu-icon > div {
+  width: 100%;
+  height: 3px;
+  margin-top: 3px;
+  /*background: #000;*/
+  border-radius: 3px;
+}
+
+.ve-menu-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;   
+  /*background: #000;*/   
+}
+
+/* 一级菜单 */
+.ve-menu-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: #fff;
+}
+
+.ve-menu-mobile li {
+  width: 100%;
+  color: #fff;
+}
+
+.ve-menu-mobile li a {
+  padding: 15px 0;
+  border-bottom: 1px solid #333;
+}
+
+/* 二级菜单 */
+.ve-menu-mobile ul {
+  display: none;
+}
+
+.ve-menu-mobile  ul li a {
+  background: #222;
+}
+
+.ve-menu-close {
+  overflow: hidden;
+}
+
+.ve-menu-close > div {
+  float: right;
+  height: 45px;
+  padding: 0 10px;
+  line-height: 45px;
+}
+
+.ve-menu-close > div:after {
+  font-size: 35px;
+  content: '\00d7';
+}
+

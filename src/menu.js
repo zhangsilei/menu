@@ -1,5 +1,5 @@
 ;
-(function($) {
+(function($, w) {
 	$.fn.menu = function(options) {
 		// 自带主题: dark(黑底白字)、blue(蓝底白字)
 		var themeColor;
@@ -17,7 +17,7 @@
 				hoverBgColor: '#000'
 			}
 		};
-		var $firstMenu = this.children('ul'),
+		var $firstMenu = $('.ve-menu-pc'),
 			$firstLinks = $firstMenu.children('li').children('a'),
 			$sencondLinks = $firstMenu.find('ul').find('a'),
 			hasSecond = $firstMenu.find('ul').length;
@@ -35,10 +35,12 @@
 			secondHoverFontColor: themeColor.blue.hoverFontColor,
 			secondHoverBgColor: themeColor.blue.hoverBgColor,
 
+			height: 40,
 			itemWidth: 20,
 			itemMargin: 1,
-
-			theme: 'blue'
+			theme: 'blue',
+			menuIconColor: '#000',
+			menuIconMaskColor: '#000'
 		};
 
 		var settings = $.extend({}, defaults, options);
@@ -59,6 +61,8 @@
 		// 一级菜单样式
 		$firstLinks.css({
 
+			height: settings.height,
+			lineHeight: settings.height + 'px',
 			fontSize: settings.firstFontSize,
 			color: settings.firstFontColor,
 			backgroundColor: settings.firstBgColor
@@ -78,6 +82,8 @@
 		if (hasSecond) {
 
 			$sencondLinks.css({
+				height: settings.height,
+				lineHeight: settings.height + 'px',
 				fontSize: settings.secondFontSize,
 				color: settings.secondFontColor,
 				backgroundColor: settings.secondBgColor
@@ -87,6 +93,7 @@
 			$.each($firstLinks, function(index, val) {
 				var $secondMenu = $(this).next('ul');
 
+				$secondMenu.css('top', settings.height);
 				if ($secondMenu.width() + settings.itemWidth < $firstLinks.width()) {
 					$secondMenu.width($firstLinks.width());
 				} else {
@@ -96,53 +103,18 @@
 
 		}
 
-		if (isMobile) { // 在移动端打开页面
-
-			var eventType = 'hover';
-
+		if (isMobile) { // 在移动端打开页面，将事件触发改为click
 			try {
 				if (FastClick) {
 					FastClick.attach(document.body); // 支持fastclick
-					eventType = 'click';
 				}
 			} catch (e) {
-				console.log('fastclick.js is not found.You are still using \'click\'');
+				console.log('fastclick.js is not found.You are still using normal \'click\'');
 			}
-
-			if (hasSecond) {
-
-				if (eventType == 'hover') {
-					setHoverCss();
-				} else if (eventType == 'click') {
-
-					$firstLinks.on('click', function() {
-						var $this = $(this),
-							$secondMenu = $this.next('ul');
-						if ($secondMenu.is(':hidden')) {
-							$secondMenu.show();
-						} else if ($secondMenu.is(':visible')) {
-							$secondMenu.hide();
-						}
-					});
-
-					$sencondLinks.on('click', function() {
-						var $this = $(this),
-							$secondMenu = $this.parent().parent();
-						if ($secondMenu.is(':hidden')) {
-							$secondMenu.show();
-						} else if ($secondMenu.is(':visible')) {
-							$secondMenu.hide();
-						}
-					})
-
-				}
-
-			}
-		} else { // 在PC端打开页面
+		} else { // 在PC端打开页面，事件触发仍为hover
 			if (hasSecond) {
 				setHoverCss();
 			}
-
 		}
 
 		/**
@@ -227,6 +199,54 @@
 			});
 		}
 
+		// 根据屏幕大小进行响应式布局
+		function responsiveLayout() {
+			var screenWidth = $(w).width(),
+				$menuIcon = $('.ve-menu-icon');
+
+			if (screenWidth <= 768) {
+				if (!$menuIcon.length) {
+					// 隐藏原菜单
+					$firstMenu.hide();
+					// 添加菜单按钮
+					$firstMenu.after('<div class="ve-menu-icon"><div></div><div></div><div></div></div>');
+					$menuIcon = $('.ve-menu-icon');
+					$menuIcon.css('marginTop', (($firstLinks.height() - $menuIcon.height()) / 2)).on('click', function() {
+						// 创建遮罩和一、二级菜单
+						$('<div class="ve-menu-mask"></div>')
+							.css('background', settings.menuIconMaskColor).appendTo('.ve-menu')
+							.after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
+							.next().find('ul, li, a').removeAttr('style');
+						// 菜单事件
+						$('.ve-menu-mobile').children('li').on('click', function() {
+							$(this).find('ul').toggle().on('click', function(event) {
+								return false;
+							})
+						});
+						// 关闭事件
+						$('.ve-menu-close').children('div').on('click', function() {
+							$('.ve-menu-mask').hide();
+							$('.ve-menu-mobile').hide();
+						})
+					}).children('div').css('background', settings.menuIconColor);
+				} else {
+					$firstMenu.hide();
+					$menuIcon.show();
+				}
+			} else {
+				if ($menuIcon.length) {
+					$firstMenu.show();
+					$menuIcon.hide();
+				}
+			}
+		}
+
+		responsiveLayout();
+
+		$(window).resize(function(event) {
+			responsiveLayout()
+		});
+
 		return this;
 	}
-})(jQuery);
+})(jQuery, window);
