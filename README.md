@@ -1,4 +1,7 @@
-## menu Plugin V 0.12
+## menu Plugin V 0.13
+
+### V 0.13版本说明：
+1. 代码重构，方便功能拓展。（后面的迭代会加上动画效果）
 
 ### V 0.12版本说明：
 1. 修复鼠标滑到二级菜单时，当前一级菜单背景色丢失的问题
@@ -29,22 +32,24 @@
     - `secondHoverBgColor: '#0C79B1'`（鼠标悬浮背景颜色）
      
 	**一、二级公用参数示例：**
-		- `height:（菜单宽高度，默认40px）  
-		- `itemWidth: 20`（菜单宽度：除去自身内容的宽度之外，附加的横向宽度，默认20px） 
-  	- `theme: 'blue'`（主题：blue | dark，默认为blue）  
+	- `height`:（菜单宽高度，默认40px）  
+	- `itemWidth: 20`（菜单宽度：除去自身内容的宽度之外，附加的横向宽度，默认20px） 
+  	- `theme: 'blue'`（主题：blue | dark，默认为blue）    
+
+    **移动端参数示例：**
   	- `menuIconColor: '#000'`（小屏幕下菜单按钮的颜色，默认黑色）
-  	- `menuIconMaskColor: '#000'`（小屏幕下点击菜单按钮后的遮罩层颜色，默认黑色）
-  	- `menuFirstListBgColor: '#000'`（小屏幕下一级菜单背景颜色，默认黑色）
-  	- `menuFirstListFontColor: '#000'`（小屏幕下一级菜单字体颜色，默认白色）
-  	- `menuSecondListBgColor: '#000'`（小屏幕下二级菜单背景颜色，默认#222）
-  	- `menuSecondListFontColor: '#000'`（小屏幕下二级菜单字体颜色，默认白色）
+  	- `menuMaskColor: '#000'`（小屏幕下点击菜单按钮后的遮罩层颜色，默认黑色）
+  	- `mFirstBgColor: '#000'`（小屏幕下一级菜单背景颜色，默认黑色）
+  	- `mFirstFontColor: '#000'`（小屏幕下一级菜单字体颜色，默认白色）
+  	- `mSecondBgColor: '#000'`（小屏幕下二级菜单背景颜色，默认#222）
+  	- `mSecondFontColor: '#000'`（小屏幕下二级菜单字体颜色，默认白色）
   	- `closeIconColor: '#fff'`（小屏幕下关闭按钮颜色，默认白色）
 
 5. [效果展示](http://dreamon324.github.io/menu/demo.html)
 
 ### 二、使用说明
 
-1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.12.zip)
+1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.13.zip)
 
 2. 引入 menu 样式  
 	```html

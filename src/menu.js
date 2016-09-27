@@ -1,9 +1,16 @@
 ;
 (function($, w) {
-	$.fn.menu = function(options) {
+
+	// 取元素放在外面
+	var $firstMenu = $('.ve-menu-pc'),
+		$firstLinks = $firstMenu.children('li').children('a'),
+		$sencondLinks = $firstMenu.find('ul').find('a'),
+		hasSecond = $firstMenu.find('ul').length;
+
+	// 菜单类构造方法
+	var Menu = function(options) {
 		// 自带主题: dark(黑底白字)、blue(蓝底白字)
-		var themeColor;
-		themeColor = {
+		this.themeColor = {
 			blue: {
 				fontColor: '#fff',
 				bgColor: '#0E90D2',
@@ -17,23 +24,18 @@
 				hoverBgColor: '#000'
 			}
 		};
-		var $firstMenu = $('.ve-menu-pc'),
-			$firstLinks = $firstMenu.children('li').children('a'),
-			$sencondLinks = $firstMenu.find('ul').find('a'),
-			hasSecond = $firstMenu.find('ul').length;
-
-		var defaults = {
+		this.defaults = {
 			firstFontSize: '16px',
-			firstFontColor: themeColor.blue.fontColor,
-			firstBgColor: themeColor.blue.bgColor,
-			firstHoverFontColor: themeColor.blue.hoverFontColor,
-			firstHoverBgColor: themeColor.blue.hoverBgColor,
+			firstFontColor: this.themeColor.blue.fontColor,
+			firstBgColor: this.themeColor.blue.bgColor,
+			firstHoverFontColor: this.themeColor.blue.hoverFontColor,
+			firstHoverBgColor: this.themeColor.blue.hoverBgColor,
 
 			secondFontSize: '16px',
-			secondFontColor: themeColor.blue.fontColor,
-			secondBgColor: themeColor.blue.bgColor,
-			secondHoverFontColor: themeColor.blue.hoverFontColor,
-			secondHoverBgColor: themeColor.blue.hoverBgColor,
+			secondFontColor: this.themeColor.blue.fontColor,
+			secondBgColor: this.themeColor.blue.bgColor,
+			secondHoverFontColor: this.themeColor.blue.hoverFontColor,
+			secondHoverBgColor: this.themeColor.blue.hoverBgColor,
 
 			height: 40,
 			itemWidth: 20,
@@ -41,174 +43,141 @@
 			theme: 'blue',
 			menuIconColor: '#000',
 			menuMaskColor: '#000',
-			menuFirstListBgColor: '#000',
-			menuFirstListFontColor: '#fff',
-			menuSecondListBgColor: '#222',
-			menuSecondListFontColor: '#fff',
+			mFirstBgColor: '#000',
+			mFirstFontColor: '#fff',
+			mSecondBgColor: '#222',
+			mSecondFontColor: '#fff',
 			closeIconColor: '#fff'
 		};
+		this.settings = $.extend({}, this.defaults, options);
+		this.isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);;
+	}
 
-		var settings = $.extend({}, defaults, options);
-		var isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);
-
-		// 设置默认主题
-		switch (settings.theme) {
-			case 'blue':
-				setThemeColor(themeColor.blue.fontColor, themeColor.blue.bgColor);
-				!isMobile && setHoverBgColor(themeColor.blue.hoverFontColor, themeColor.blue.hoverBgColor);
-				break;
-			case 'dark':
-				setThemeColor(themeColor.dark.fontColor, themeColor.dark.bgColor);
-				!isMobile && setHoverBgColor(themeColor.dark.hoverFontColor, themeColor.dark.hoverBgColor);
-				break;
-		}
-
-		// 一级菜单样式
-		$firstLinks.css({
-
-			height: settings.height,
-			lineHeight: settings.height + 'px',
-			fontSize: settings.firstFontSize,
-			color: settings.firstFontColor,
-			backgroundColor: settings.firstBgColor
-
-		}).parent('li').each(function(index, el) {
-
-			var $this = $(this);
-			$this.width($this.width() + settings.itemWidth); // 一级菜单宽度
-
-		}).not($firstMenu.children('li').first()).css({
-
-			marginLeft: settings.itemMargin + 'px' // 菜单间隙
-
-		});
-
-		// 二级菜单样式
-		if (hasSecond) {
-
-			$sencondLinks.css({
-				height: settings.height,
-				lineHeight: settings.height + 'px',
-				fontSize: settings.secondFontSize,
-				color: settings.secondFontColor,
-				backgroundColor: settings.secondBgColor
-			});
-
-			// 二级菜单宽度
-			$.each($firstLinks, function(index, val) {
-				var $secondMenu = $(this).next('ul');
-
-				$secondMenu.css('top', settings.height);
-				if ($secondMenu.width() + settings.itemWidth < $firstLinks.width()) {
-					$secondMenu.width($firstLinks.width());
-				} else {
-					$secondMenu.width($secondMenu.width() + settings.itemWidth);
-				}
-			});
-
-		}
-
-		if (isMobile) { // 在移动端打开页面，将事件触发改为click
-			try {
-				if (FastClick) {
-					FastClick.attach(document.body); // 支持fastclick
-				}
-			} catch (e) {
-				console.log('fastclick.js is not found.You are still using normal \'click\'');
-			}
-		} else { // 在PC端打开页面，事件触发仍为hover
-			if (hasSecond) {
-				setHoverCss();
-			}
-		}
-
-		/**
-		 * 设置默认主题颜色
-		 * @description 自带的配色方案是一、二级菜单保持相同颜色
-		 * @param {String} fontColor 字体颜色
-		 * @param {String} bgColor   背景颜色
-		 */
-		function setThemeColor(fontColor, bgColor) {
-			$firstLinks.css({
-				color: fontColor,
-				backgroundColor: bgColor
-			});
-			$sencondLinks.css({
-				color: fontColor,
-				backgroundColor: bgColor
-			});
-		}
-
-		/**
-		 * 设置鼠标滑过颜色
-		 * @param {String} fontColor 字体颜色
-		 * @param {String} bgColor   背景颜色
-		 */
-		function setHoverBgColor(fontColor, bgColor) {
-			var normalFontColor, normalBgColor;
-
-			$firstMenu.find('a').hover(function() {
-				var $this = $(this),
-					normalFontColor = $this.css('color');
-				normalBgColor = $this.css('backgroundColor');
-				$this.css({
+	// 原型链上加属性和方法
+	Menu.prototype = {
+		setDefaultTheme: function() {
+			// 设置默认主题
+			switch (this.settings.theme) {
+				case 'blue':
+					setThemeColor(this.themeColor.blue.fontColor, this.themeColor.blue.bgColor);
+					!this.isMobile && setHoverBgColor(this.themeColor.blue.hoverFontColor, this.themeColor.blue.hoverBgColor);
+					break;
+				case 'dark':
+					setThemeColor(this.themeColor.dark.fontColor, this.themeColor.dark.bgColor);
+					!this.isMobile && setHoverBgColor(this.themeColor.dark.hoverFontColor, this.themeColor.dark.hoverBgColor);
+					break;
+			};
+			// 设置默认主题颜色
+			function setThemeColor(fontColor, bgColor) {
+				$firstLinks.css({
 					color: fontColor,
 					backgroundColor: bgColor
 				});
-			}, function() {
-				$(this).css({
-					color: normalFontColor,
-					backgroundColor: normalBgColor
+				$sencondLinks.css({
+					color: fontColor,
+					backgroundColor: bgColor
 				});
+			}
+			// 设置鼠标滑过背景颜色
+			function setHoverBgColor(fontColor, bgColor) {
+				var normalFontColor, normalBgColor;
+				$firstMenu.find('a').hover(function() {
+					var $this = $(this),
+						normalFontColor = $this.css('color');
+					normalBgColor = $this.css('backgroundColor');
+					$this.css({
+						color: fontColor,
+						backgroundColor: bgColor
+					});
+				}, function() {
+					$(this).css({
+						color: normalFontColor,
+						backgroundColor: normalBgColor
+					});
+				});
+			}
+			return this;
+		},
+		setFirstMenu: function() {
+			var _this = this;
+			$firstLinks.css({
+				height: _this.settings.height,
+				lineHeight: _this.settings.height + 'px',
+				fontSize: _this.settings.firstFontSize,
+				color: _this.settings.firstFontColor,
+				backgroundColor: _this.settings.firstBgColor
+			}).parent('li').each(function(index, el) {
+				var $this = $(this);
+				$this.width($this.width() + _this.settings.itemWidth); // 一级菜单宽度
+			}).not($firstMenu.children('li').first()).css({
+				marginLeft: this.settings.itemMargin + 'px' // 菜单间隙
 			});
-		}
-
-		/**
-		 * 设置鼠标悬浮样式
-		 */
-		function setHoverCss() {
+			return _this;
+		},
+		setSecondMenu: function() {
+			var _this = this;
+			if (hasSecond) {
+				$sencondLinks.css({
+					height: _this.settings.height,
+					lineHeight: _this.settings.height + 'px',
+					fontSize: _this.settings.secondFontSize,
+					color: _this.settings.secondFontColor,
+					backgroundColor: _this.settings.secondBgColor
+				});
+				// 二级菜单宽度
+				$.each($firstLinks, function(index, val) {
+					var $secondMenu = $(this).next('ul');
+					$secondMenu.css('top', _this.settings.height);
+					if ($secondMenu.width() + _this.settings.itemWidth < $firstLinks.width()) {
+						$secondMenu.width($firstLinks.width());
+					} else {
+						$secondMenu.width($secondMenu.width() + _this.settings.itemWidth);
+					}
+				});
+			}
+			return _this;
+		},
+		setHoverCss: function() {
+			var _this = this;
 			// 一级菜单样式
 			$firstLinks.hover(function() {
 				$(this).css({
-					color: settings.firstHoverFontColor,
-					backgroundColor: settings.firstHoverBgColor
+					color: _this.settings.firstHoverFontColor,
+					backgroundColor: _this.settings.firstHoverBgColor
 				})
 			}, function() {
 				$(this).css({
-					color: settings.firstFontColor,
-					backgroundColor: settings.firstBgColor
+					color: _this.settings.firstFontColor,
+					backgroundColor: _this.settings.firstBgColor
 				})
 			});
-
 			// 二级菜单样式
 			$sencondLinks.hover(function() {
 				var $this = $(this);
 				$this.css({
-					color: settings.secondHoverFontColor,
-					backgroundColor: settings.secondHoverBgColor
+					color: _this.settings.secondHoverFontColor,
+					backgroundColor: _this.settings.secondHoverBgColor
 				});
 				$this.parents('ul').first().prev().css({
-					color: settings.firstHoverFontColor,
-					backgroundColor: settings.firstHoverBgColor
+					color: _this.settings.firstHoverFontColor,
+					backgroundColor: _this.settings.firstHoverBgColor
 				});
 			}, function() {
 				var $this = $(this);
 				$this.css({
-					color: settings.secondFontColor,
-					backgroundColor: settings.secondBgColor
+					color: _this.settings.secondFontColor,
+					backgroundColor: _this.settings.secondBgColor
 				});
 				$this.parents('ul').first().prev().css({
-					color: settings.firstFontColor,
-					backgroundColor: settings.firstBgColor
+					color: _this.settings.firstFontColor,
+					backgroundColor: _this.settings.firstBgColor
 				});
 			});
-		}
-
-		// 根据屏幕大小进行响应式布局
-		function responsiveLayout() {
-			var screenWidth = $(w).width(),
+		},
+		responsiveLayout: function() {
+			var _this = this,
+				screenWidth = $(w).width(),
 				$menuIcon = $('.ve-menu-icon');
-
 			if (screenWidth <= 768) {
 				if (!$menuIcon.length) {
 					// 隐藏原菜单
@@ -219,7 +188,7 @@
 					$menuIcon.css('marginTop', (($firstLinks.height() - $menuIcon.height()) / 2)).on('click', function() {
 						// 创建遮罩和一、二级菜单
 						$('<div class="ve-menu-mask"></div>')
-							.css('background', settings.menuMaskColor).appendTo('.ve-menu')
+							.css('background', _this.settings.menuMaskColor).appendTo('.ve-menu')
 							.after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
 							.next().find('ul, li, a').removeAttr('style');
 						// 菜单事件
@@ -227,20 +196,20 @@
 							$(this).find('ul').toggle().on('click', function(event) {
 								return false;
 							}).find('a').css({ //  一级菜单样式
-								background: settings.menuSecondListBgColor,
-								color: settings.menuSecondListFontColor
+								background: _this.settings.mSecondBgColor,
+								color: _this.settings.mSecondFontColor
 							});
 						}).children('a').css({ // 二级菜单样式
-							background: settings.menuFirstListBgColor,
-							color: settings.menuFirstListFontColor
+							background: _this.settings.mFirstBgColor,
+							color: _this.settings.mFirstFontColor
 						});
 						// 关闭按钮样式、事件
-						$('.ve-menu-close').css('color', settings.closeIconColor)
+						$('.ve-menu-close').css('color', _this.settings.closeIconColor)
 							.children('div').on('click', function() {
 								$('.ve-menu-mask').hide();
 								$('.ve-menu-mobile').hide();
 							});
-					}).children('div').css('background', settings.menuIconColor);
+					}).children('div').css('background', _this.settings.menuIconColor);
 				} else {
 					$firstMenu.hide();
 					$menuIcon.show();
@@ -251,14 +220,39 @@
 					$menuIcon.hide();
 				}
 			}
+			return _this;
+		},
+		supportFastClick: function() {
+			if (this.isMobile) { // 在移动端打开页面，将事件触发改为click
+				try {
+					if (FastClick) {
+						FastClick.attach(document.body); // 支持fastclick
+					}
+				} catch (e) {
+					console.log('fastclick.js is not found.You are still using normal \'click\'');
+				}
+			} else { // 在PC端打开页面，事件触发仍为hover
+				if (hasSecond) {
+					this.setHoverCss();
+				}
+			}
+			return this;
 		}
+	}
 
-		responsiveLayout();
-
+	// 将插件挂到jQuery下并初始化
+	$.fn.menu = function(options) {
+		var menu = new Menu(options);
+		menu.setDefaultTheme()
+			.setFirstMenu()
+			.setSecondMenu()
+			.responsiveLayout()
+			.supportFastClick();
 		$(window).resize(function(event) {
-			responsiveLayout()
+			menu.responsiveLayout()
 		});
 
 		return this;
 	}
-})(jQuery, window);
+
+})(jQuery, window)
