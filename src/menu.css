@@ -1,5 +1,10 @@
 /* base css */
 
+*{
+  margin: 0;
+  padding: 0;
+}
+
 .ve-menu ul {
   font-family: 'Arial', 'Microsoft YaHei', '黑体', '宋体', sans-serif;
   margin: 0;
@@ -55,6 +60,7 @@
   float: right;
   width: 20px;
   height: 21px;
+  margin-right: 10px;
   overflow: hidden;
   /* 垂直居中用js动态计算 */
 }
@@ -110,9 +116,7 @@
 
 .ve-menu-close > div {
   float: right;
-  height: 45px;
   padding: 0 10px;
-  line-height: 45px;
 }
 
 .ve-menu-close > div:after {
