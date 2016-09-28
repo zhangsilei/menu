@@ -49,12 +49,13 @@
   	- `mSecondBgColor: '#000'`（小屏幕下二级菜单背景颜色，默认#222）
   	- `mSecondFontColor: '#000'`（小屏幕下二级菜单字体颜色，默认白色）
   	- `closeIconColor: '#fff'`（小屏幕下关闭按钮颜色，默认白色）
+  	- `animate: false`（小屏幕下的动画效果，默认关闭。暂时只支持：'fade'）
 
 5. [效果展示](http://dreamon324.github.io/menu/demo.html)
 
 ### 二、使用说明
 
-1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.13.zip)
+1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.14.zip)
 
 2. 引入 menu 样式  
 	```html
@@ -69,8 +70,8 @@
 
 4. 粘贴html代码块  
 	```html
-	<div class="nav-menu">     
-		<ul>
+	<div class="ve-menu">     
+		<ul class="ve-menu-pc">
 			<li><a href="#">link</a></li>
 			<li><a href="#">link</a>
 				<ul>  
@@ -84,7 +85,7 @@
 			<li><a href="#">link</a></li>
 		</ul>
 	</div>
-	```
+	  ```
   
 5. 初始化 menu
 	```js
