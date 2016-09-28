@@ -1,10 +1,5 @@
 /* base css */
 
-*{
-  margin: 0;
-  padding: 0;
-}
-
 .ve-menu ul {
   font-family: 'Arial', 'Microsoft YaHei', '黑体', '宋体', sans-serif;
   margin: 0;
@@ -123,4 +118,7 @@
   font-size: 35px;
   content: '\00d7';
 }
+
+/* 动画 */
+
 
