@@ -47,7 +47,9 @@
 			mFirstFontColor: '#fff',
 			mSecondBgColor: '#222',
 			mSecondFontColor: '#fff',
-			closeIconColor: '#fff'
+			closeIconColor: '#fff',
+
+			animate: false
 		};
 		this.settings = $.extend({}, this.defaults, options);
 		this.isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);;
@@ -191,9 +193,19 @@
 							.css('background', _this.settings.menuMaskColor).appendTo('.ve-menu')
 							.after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
 							.next().find('ul, li, a').removeAttr('style');
-						// 菜单事件
+						// 遮罩层动画
+						if (_this.settings.animate) {
+							_this.animate($('.ve-menu-mask'), 'fade', 100);
+							_this.animate($('.ve-menu-mobile'), 'fade', 300);
+						}
+						// 菜单事件 
 						$('.ve-menu-mobile').children('li').on('click', function() {
-							$(this).find('ul').toggle().on('click', function(event) {
+							var speed = 0;
+							// 二级菜单动画 
+							if (_this.settings.animate) {
+								speed = 200;
+							}
+							$(this).find('ul').toggle(speed).on('click', function(event) {
 								return false;
 							}).find('a').css({ //  一级菜单样式
 								background: _this.settings.mSecondBgColor,
@@ -206,8 +218,14 @@
 						// 关闭按钮样式、事件
 						$('.ve-menu-close').css('color', _this.settings.closeIconColor)
 							.children('div').on('click', function() {
-								$('.ve-menu-mask').hide();
-								$('.ve-menu-mobile').hide();
+								// 关闭动画
+								if (_this.settings.animate) {
+									$('.ve-menu-mask').fadeOut(300);
+									$('.ve-menu-mobile').fadeOut(100);
+								} else {
+									$('.ve-menu-mask').hide();
+									$('.ve-menu-mobile').hide();
+								}
 							});
 					}).children('div').css('background', _this.settings.menuIconColor);
 				} else {
@@ -220,6 +238,7 @@
 					$menuIcon.hide();
 				}
 			}
+
 			return _this;
 		},
 		supportFastClick: function() {
@@ -237,6 +256,16 @@
 				}
 			}
 			return this;
+		},
+		animate: function($ele, type, speed, showOrHide) {
+			var style = {};
+			switch (type) {
+				case 'fade':
+					$ele.css('opacity', 0);
+					style.opacity = 1;
+					break;
+			}
+			$ele.animate(style, speed, 'linear', function() {});
 		}
 	}
 
