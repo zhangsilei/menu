@@ -13,11 +13,12 @@
 
 ### 一、插件说明
 
-1. 支持响应式布局，可在移动端使用。
-2. 默认使用fastclick.js，若页面中未引入fastclick.js也不影响功能，只是会降级到click事件，会有300ms延迟你懂的。
-
-3. menu是一款基于jQuery的轻量级菜单插件，可以根据喜好进行个性化的UI定制。  
+1. menu是一款基于jQuery的轻量级菜单插件，可以根据喜好进行个性化的UI定制。  
 兼容性：支持Chrome、Safari、Firefox、IE7+。
+
+2. 支持响应式布局，可在移动端使用。 
+
+3. 默认使用fastclick.js，若页面中未引入fastclick.js也不影响功能，只是会降级到click事件，会有300ms延迟你懂的。
 
 4. 参数说明  
 
