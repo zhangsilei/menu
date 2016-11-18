@@ -184,7 +184,8 @@
         responsiveLayout: function() {
             var _this = this,
                 screenWidth = $(w).width(),
-                $menuIcon = $('.ve-menu-icon');
+                $menuIcon = $('.ve-menu-icon'),
+                animate = _this.settings.animate;
             if (screenWidth <= 768) {
                 if (!$menuIcon.length) {
                     // 隐藏原菜单
@@ -194,20 +195,27 @@
                     $menuIcon = $('.ve-menu-icon');
                     $menuIcon.css('marginTop', (($firstLinks.height() - $menuIcon.height()) / 2)).on('click', function() {
                         // 创建遮罩和一、二级菜单
-                        $('<div class="ve-menu-mask"></div>')
-                            .css('background', _this.settings.menuMaskColor).appendTo('.ve-menu')
-                            .after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
-                            .next().find('ul, li, a').removeAttr('style');
-                        // 遮罩层动画
-                        if (_this.settings.animate) {
-                            _this.animate($('.ve-menu-mask'), 'fade', 100);
-                            _this.animate($('.ve-menu-mobile'), 'fade', 300);
+                        if (!$('.ve-menu-mask').length && !$('.ve-menu-mobile').length) {
+                            $('<div class="ve-menu-mask"></div>')
+                                .css('background', _this.settings.menuMaskColor).appendTo('.ve-menu')
+                                .after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
+                                .next().find('ul, li, a').removeAttr('style');
+                        } else {
+                            $('.ve-menu-mask').show();
+                            $('.ve-menu-mobile').show();
+                        }
+                        // 动画开启
+                        // TODO 
+                        // 将动画速度设为插件的参数
+                        if (animate) {
+                            _this.animate($('.ve-menu-mask'), animate, 100, 'start');
+                            _this.animate($('.ve-menu-mobile'), animate, 300, 'start');
                         }
                         // 菜单事件 
                         $('.ve-menu-mobile').children('li').on('click', function() {
                             var speed = 0;
-                            // 二级菜单动画 
-                            if (_this.settings.animate) {
+                            // 二级菜单动画
+                            if (animate) {
                                 speed = 200;
                             }
                             $(this).find('ul').toggle(speed).on('click', function(event) {
@@ -223,10 +231,10 @@
                         // 关闭按钮样式、事件
                         $('.ve-menu-close').css('color', _this.settings.closeIconColor)
                             .children('div').on('click', function() {
-                                // 关闭动画
-                                if (_this.settings.animate) {
-                                    $('.ve-menu-mask').fadeOut(300);
-                                    $('.ve-menu-mobile').fadeOut(100);
+                                // 动画结束
+                                if (animate) {
+                                    _this.animate($('.ve-menu-mask'), animate, 100, 'end');
+                                    _this.animate($('.ve-menu-mobile'), animate, 300, 'end');
                                 } else {
                                     $('.ve-menu-mask').hide();
                                     $('.ve-menu-mobile').hide();
@@ -262,15 +270,31 @@
             }
             return this;
         },
-        animate: function($ele, type, speed) {
-            var style = {};
+        animate: function($ele, type, speed, startOrEnd) {
+            var startStyle = {},
+                endStyle = {};
             switch (type) {
                 case 'fade':
                     $ele.css('opacity', 0);
-                    style.opacity = 1;
+                    startStyle.opacity = 1;
+                    endStyle.opacity = 0;
+                    break;
+                case 'slide':
+                    $ele.css('height', 0);
+                    startStyle.height = '100%';
+                    endStyle.height = 0;
                     break;
             }
-            $ele.animate(style, speed, 'linear', function() {});
+            $ele.animate(
+                startOrEnd == 'start' ? startStyle : endStyle,
+                speed,
+                'linear',
+                function() {
+                    if (startOrEnd == 'end') {
+                        $ele.hide();
+                    }
+                }
+            );
         }
     }
 
