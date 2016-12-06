@@ -208,7 +208,7 @@
                         // TODO 
                         // 将动画速度设为插件的参数
                         if (animate) {
-                            _this.animate($('.ve-menu-mask'), animate, 100, 'start');
+                            _this.animate($('.ve-menu-mask'), animate, 300, 'start');
                             _this.animate($('.ve-menu-mobile'), animate, 300, 'start');
                         }
                         // 菜单事件 
@@ -233,7 +233,7 @@
                             .children('div').on('click', function() {
                                 // 动画结束
                                 if (animate) {
-                                    _this.animate($('.ve-menu-mask'), animate, 100, 'end');
+                                    _this.animate($('.ve-menu-mask'), animate, 300, 'end');
                                     _this.animate($('.ve-menu-mobile'), animate, 300, 'end');
                                 } else {
                                     $('.ve-menu-mask').hide();
@@ -273,28 +273,35 @@
         animate: function($ele, type, speed, startOrEnd) {
             var startStyle = {},
                 endStyle = {};
+
+            $ele.stop(true, true);
             switch (type) {
                 case 'fade':
-                    $ele.css('opacity', 0);
-                    startStyle.opacity = 1;
-                    endStyle.opacity = 0;
+                    // $ele.css('opacity', 0);
+                    // startStyle.opacity = 1;
+                    // endStyle.opacity = 0;
                     break;
                 case 'slide':
-                    $ele.css('height', 0);
-                    startStyle.height = '100%';
-                    endStyle.height = 0;
+                    if (startOrEnd == 'start') {
+                        $ele.css('height', 0);
+                        startStyle.height = '100%';
+                    } else if (startOrEnd == 'end') {
+                        $ele.css('height', '100%');
+                        endStyle.height = 0;
+                    }
                     break;
             }
-            $ele.animate(
-                startOrEnd == 'start' ? startStyle : endStyle,
-                speed,
-                'linear',
-                function() {
-                    if (startOrEnd == 'end') {
-                        $ele.hide();
-                    }
-                }
-            );
+            // $ele.animate(
+            //     startOrEnd == 'start' ? startStyle : endStyle,
+            //     speed,
+            //     'linear',
+            //     function() {
+            //         if (startOrEnd == 'end') {
+            //             $ele.hide();
+            //         }
+            //     }
+            // );
+            $ele.animate(startOrEnd == 'start' ? startStyle : endStyle, speed);
         }
     }
 
