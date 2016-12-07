@@ -53,7 +53,8 @@
             mSecondFontColor: '#fff',
             closeIconColor: '#fff',
 
-            animate: false
+            animate: false,
+            speed: 200
         };
         this.settings = $.extend({}, this.defaults, options);
         this.isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);;
@@ -184,7 +185,8 @@
         responsiveLayout: function() {
             var _this = this,
                 screenWidth = $(w).width(),
-                $menuIcon = $('.ve-menu-icon');
+                $menuIcon = $('.ve-menu-icon'),
+                animate = _this.settings.animate;
             if (screenWidth <= 768) {
                 if (!$menuIcon.length) {
                     // 隐藏原菜单
@@ -192,47 +194,65 @@
                     // 添加菜单按钮
                     $firstMenu.after('<div class="ve-menu-icon"><div></div><div></div><div></div></div>');
                     $menuIcon = $('.ve-menu-icon');
-                    $menuIcon.css('marginTop', (($firstLinks.height() - $menuIcon.height()) / 2)).on('click', function() {
-                        // 创建遮罩和一、二级菜单
-                        $('<div class="ve-menu-mask"></div>')
-                            .css('background', _this.settings.menuMaskColor).appendTo('.ve-menu')
-                            .after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
-                            .next().find('ul, li, a').removeAttr('style');
-                        // 遮罩层动画
-                        if (_this.settings.animate) {
-                            _this.animate($('.ve-menu-mask'), 'fade', 100);
-                            _this.animate($('.ve-menu-mobile'), 'fade', 300);
-                        }
-                        // 菜单事件 
-                        $('.ve-menu-mobile').children('li').on('click', function() {
-                            var speed = 0;
-                            // 二级菜单动画 
-                            if (_this.settings.animate) {
-                                speed = 200;
+                    $menuIcon.css('marginTop', (($firstLinks.height() - $menuIcon.height()) / 2))
+                        .on('click', function() {
+                            // 创建遮罩和一、二级菜单
+                            if (!$('.ve-menu-mask').length && !$('.ve-menu-mobile').length) {
+                                $('<div class="ve-menu-mask"></div>')
+                                    .css('background', _this.settings.menuMaskColor).appendTo('.ve-menu')
+                                    .after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
+                                    .next().find('ul, li, a')
+                                    .removeAttr('style');
+                            } 
+
+                            // TODO 将动画速度设为插件的参数
+                            // 动画显示一级菜单和遮罩层
+                            if (animate) {
+                                _this.animate($('.ve-menu-mask'), animate, _this.settings.speed, 'open');
+                                _this.animate($('.ve-menu-mobile'), animate, _this.settings.speed, 'open');
+                            } else {
+                                $('.ve-menu-mask').show();
+                                $('.ve-menu-mobile').show();
                             }
-                            $(this).find('ul').toggle(speed).on('click', function(event) {
-                                return false;
-                            }).find('a').css({ //  一级菜单样式
-                                background: _this.settings.mSecondBgColor,
-                                color: _this.settings.mSecondFontColor
-                            });
-                        }).children('a').css({ // 二级菜单样式
-                            background: _this.settings.mFirstBgColor,
-                            color: _this.settings.mFirstFontColor
-                        });
-                        // 关闭按钮样式、事件
-                        $('.ve-menu-close').css('color', _this.settings.closeIconColor)
-                            .children('div').on('click', function() {
-                                // 关闭动画
-                                if (_this.settings.animate) {
-                                    $('.ve-menu-mask').fadeOut(300);
-                                    $('.ve-menu-mobile').fadeOut(100);
-                                } else {
-                                    $('.ve-menu-mask').hide();
-                                    $('.ve-menu-mobile').hide();
-                                }
-                            });
-                    }).children('div').css('background', _this.settings.menuIconColor);
+
+                            // 二级菜单样式
+                            $('.ve-menu-mobile > li').not('.ve-menu-close')
+                                .find('ul').find('a')
+                                .css({ //  二级菜单样式
+                                    background: _this.settings.mSecondBgColor,
+                                    color: _this.settings.mSecondFontColor
+                                });
+
+                            // 一级菜单点击事件，每次打开一级菜单时重新绑定，防止重复
+                            $('.ve-menu-mobile > li').not('.ve-menu-close')
+                                .unbind('click')
+                                .on('click', function(e) {
+                                    // 暂时不支持自定义动画，默认为toggle动效
+                                    // TODO 添加自定义动画
+                                    // 二级菜单动画
+                                    if (animate) {
+                                        $(this).find('ul').toggle(150);
+                                    } else {
+                                        $(this).find('ul').toggle();
+                                    }
+                                });
+
+                            // 关闭按钮样式、点击事件
+                            $('.ve-menu-close').css('color', _this.settings.closeIconColor)
+                                .children('div')
+                                .on('click', function() {
+                                    // 动画结束
+                                    if (animate) {
+                                        _this.animate($('.ve-menu-mask'), animate, _this.settings.speed, 'close');
+                                        _this.animate($('.ve-menu-mobile'), animate, _this.settings.speed, 'close');
+                                    } else {
+                                        $('.ve-menu-mask').hide();
+                                        $('.ve-menu-mobile').hide();
+                                    }
+                                });
+                        })
+                        .children('div')
+                        .css('background', _this.settings.menuIconColor);
                 } else {
                     $firstMenu.hide();
                     $menuIcon.show();
@@ -262,15 +282,34 @@
             }
             return this;
         },
-        animate: function($ele, type, speed) {
-            var style = {};
+        animate: function($ele, type, speed, openOrClose) {
+            var startStyle = {},
+                endStyle = {};
+
             switch (type) {
                 case 'fade':
-                    $ele.css('opacity', 0);
-                    style.opacity = 1;
+                    if (openOrClose == 'open') {
+                        $ele.hide();
+                        $ele.fadeIn(speed);
+                    } else if (openOrClose == 'close') {
+                        $ele.fadeOut(speed);
+                    }
+                    // $ele.css('opacity', 0);
+                    // startStyle.opacity = 1;
+                    // endStyle.opacity = 0;
+                    break;
+                case 'slide':
+                    $ele.stop(true, true);
+                    if (openOrClose == 'open') {
+                        startStyle.height = 0;
+                        endStyle.height = '100%';
+                    } else if (openOrClose == 'close') {
+                        startStyle.height = '100%';
+                        endStyle.height = 0;
+                    }
+                    $ele.css(startStyle).animate(endStyle, speed);
                     break;
             }
-            $ele.animate(style, speed, 'linear', function() {});
         }
     }
 
