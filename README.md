@@ -1,15 +1,15 @@
-## menu Plugin V 0.14
+## menu Plugin V 0.15
 
-### V 0.14版本说明：
-1. 移动端添加了动画效果
+### V 0.15版本说明：
+	修复连续快速点击时的bug，增加渐隐渐现效果(fade)，增加下拉动画效果(slide)。
 
 ### 历史版本说明：
 
-####v0.13：
-1. 代码重构，方便功能拓展。
+####v0.14：
+	移动端添加了动画效果
 
-####v0.12：
-1. 修复鼠标滑到二级菜单时，当前一级菜单背景色丢失的问题
+####v0.13：
+	代码重构，方便功能拓展。
 
 ### 一、插件说明
 
@@ -51,12 +51,13 @@
   	- `mSecondFontColor: '#000'`（小屏幕下二级菜单字体颜色，默认白色）
   	- `closeIconColor: '#fff'`（小屏幕下关闭按钮颜色，默认白色）
   	- `animate: false`（小屏幕下的动画效果，默认关闭。暂时只支持：'fade'）
+  	- `speed: 200`（小屏幕下的动画速度，随animate属性而开合。支持：'fade'，'slide'，单位：ms）
 
 5. [效果展示](http://dreamon324.github.io/menu/demo.html)
 
 ### 二、使用说明
 
-1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.14.zip)
+1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.15.zip)
 
 2. 引入 menu 样式  
 	```html
