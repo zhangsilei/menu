@@ -1,4 +1,4 @@
-## menu Plugin V 0.15
+## menu Plugin V 0.16
 
 ### V 0.16版本说明： 
 	修复无二级菜单时，以及菜单悬浮属性不生效bug；
