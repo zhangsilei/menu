@@ -1,9 +1,13 @@
 ## menu Plugin V 0.15
 
-### V 0.15版本说明：
-	修复连续快速点击时的bug，增加渐隐渐现效果(fade)，增加下拉动画效果(slide)。
+### V 0.16版本说明： 
+	修复无二级菜单时，以及菜单悬浮属性不生效bug；
+	修改小屏幕下右上角菜单按钮位置；
 
 ### 历史版本说明：
+
+####v0.15：  
+	修复连续快速点击时的bug，增加渐隐渐现效果(fade)，增加下拉动画效果(slide)。
 
 ####v0.14：
 	移动端添加了动画效果
@@ -57,7 +61,7 @@
 
 ### 二、使用说明
 
-1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.15.zip)
+1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.16.zip)
 
 2. 引入 menu 样式  
 	```html

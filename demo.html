@@ -19,11 +19,11 @@
         <ul class="ve-menu-pc">
             <li><a href="#">link</a></li>
             <li><a href="#">lindk</a>
-                <ul>
+                <!-- <ul>
                     <li><a href="#aa">aaaaa</a></li>
                     <li><a href="#bb">bbbbb</a></li>
                     <li><a href="#cc">ccccc</a></li>
-                </ul>
+                </ul> -->
             </li>
             <li><a href="#">liank</a></li>
             <li><a href="#">linck</a></li>
@@ -36,9 +36,13 @@
     <script>
     $(function() {
         $('.ve-menu').menu({
-            itemWidth: 30,
-            itemMargin: 0,
-            animate: 'slide'
+            firstBgColor: 'red', // bug
+            firstFontColor: '#000',
+            firstHoverFontColor: '#166db0',
+            firstHoverBgColor: 'pink', // bug
+            height: 90,
+            itemWidth: 40,
+            menuIconColor: '#000'
         });
     })
     </script>

@@ -194,7 +194,7 @@
                     // 添加菜单按钮
                     $firstMenu.after('<div class="ve-menu-icon"><div></div><div></div><div></div></div>');
                     $menuIcon = $('.ve-menu-icon');
-                    $menuIcon.css('marginTop', (($firstLinks.height() - $menuIcon.height()) / 2))
+                    $menuIcon.css('marginTop', 10)
                         .on('click', function() {
                             // 创建遮罩和一、二级菜单
                             if (!$('.ve-menu-mask').length && !$('.ve-menu-mobile').length) {
@@ -203,7 +203,7 @@
                                     .after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
                                     .next().find('ul, li, a')
                                     .removeAttr('style');
-                            } 
+                            }
 
                             // TODO 将动画速度设为插件的参数
                             // 动画显示一级菜单和遮罩层
@@ -276,9 +276,9 @@
                     console.log('fastclick.js is not found.You are still using normal \'click\'');
                 }
             } else { // 在PC端打开页面，事件触发仍为hover
-                if (hasSecond) {
-                    this.setHoverCss();
-                }
+                // if (hasSecond) {
+                this.setHoverCss();
+                // }
             }
             return this;
         },
