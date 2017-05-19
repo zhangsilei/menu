@@ -55,9 +55,11 @@
   	- `mSecondFontColor: '#000'`（小屏幕下二级菜单字体颜色，默认白色）
   	- `closeIconColor: '#fff'`（小屏幕下关闭按钮颜色，默认白色）
   	- `animate: false`（小屏幕下的动画效果，默认关闭。暂时只支持：'fade'）
-  	- `speed: 200`（小屏幕下的动画速度，随animate属性而开合。支持：'fade'，'slide'，单位：ms）
+  	- `speed: 200`（小屏幕下的动画速度，随animate属性而开合。支持：'fade'，'slide'，单位：ms）  
 
-5. [效果展示](https://dreamon324.github.io/menu/demo.html)
+5. [效果展示：默认参数](https://dreamon324.github.io/menu/default-demo.html)  
+   [效果展示：一级菜单参数](https://dreamon324.github.io/menu/first-demo.html)  
+   [效果展示：二级菜单参数](https://dreamon324.github.io/menu/second-demo.html)
 
 ### 二、使用说明
 
@@ -96,7 +98,7 @@
 5. 初始化 menu
 	```js
 	$(function() {
-	  $('.nav-menu').menu({
+	  $('.ve-menu').menu({
 	    // settting...
 	  });
 	});
