@@ -1,6 +1,8 @@
 /**
- * @author zhangsilei 响应式头部菜单导航
- * @description 代码优化，
+ * @description 基于jQuery的轻量级响应式菜单
+ * 
+ * @author zhangsilei 
+ * @date 2017-06-20 添加itemWidth类型容错校验
  */
 ;
 (function($, w) {
@@ -57,7 +59,9 @@
             speed: 200
         };
         this.settings = $.extend({}, this.defaults, options);
-        this.isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);;
+        this.settings.itemWidth = this.settings.itemWidth - 0; 
+        console.log(this.settings)
+        this.isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);
     }
 
     // 原型链上加属性和方法

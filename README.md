@@ -42,7 +42,7 @@
     - `secondHoverBgColor: '#0C79B1'`（鼠标悬浮背景颜色）
      
 	**一、二级公用参数示例：**
-	- `height`:（菜单宽高度，默认40px）  
+	- `height: 40`（菜单宽高度，默认40px）  
 	- `itemWidth: 20`（菜单宽度：除去自身内容的宽度之外，附加的横向宽度，默认20px） 
   	- `theme: 'blue'`（主题：blue | dark，默认为blue）    
 
@@ -57,9 +57,7 @@
   	- `animate: false`（小屏幕下的动画效果，默认关闭。暂时只支持：'fade'）
   	- `speed: 200`（小屏幕下的动画速度，随animate属性而开合。支持：'fade'，'slide'，单位：ms）  
 
-5. [效果展示：默认参数](https://dreamon324.github.io/menu/default-demo.html)  
-   [效果展示：一级菜单参数](https://dreamon324.github.io/menu/first-demo.html)  
-   [效果展示：二级菜单参数](https://dreamon324.github.io/menu/second-demo.html)
+5. [效果展示](https://dreamon324.github.io/menu/demo.html)  
 
 ### 二、使用说明
 
@@ -83,12 +81,11 @@
 			<li><a href="#">link</a></li>
 			<li><a href="#">link</a>
 				<ul>  
-					<li><a href="#">affdf</a></li>
-					<li><a href="#">basdf</a></li>
-					<li><a href="#">casdfasdf</a></li> 
+					<li><a href="#">aaa</a></li>
+					<li><a href="#">bbb</a></li>
+					<li><a href="#">ccc</a></li> 
 				</ul>
 			</li>
-			<li><a href="#">link</a></li>
 			<li><a href="#">link</a></li>
 			<li><a href="#">link</a></li>
 		</ul>

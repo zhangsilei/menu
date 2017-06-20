@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>导航菜单组件</title>
+    <link rel="stylesheet" href="./src/menu.css" />
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        outline: none;
+        border: none;
+    }
+    
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        font-family: Roboto, sans-serif;
+    }
+    
+    .cf {
+        clear: both;
+    }
+
+    .fl {
+        float: left;
+    }
+
+    .fr {
+        float: right;
+    }
+
+    .bright {
+        color: #3BB983;
+    }
+    
+    .dark {
+        color: #2D4A5B;
+    }
+
+    .str {
+        color: #669900;
+    }
+
+    .func {
+        color: #DE4A68;
+    }
+
+    .sign {
+        color: #9F9999;
+    }
+    
+    .container {
+        width: 100%;
+        height: 100%;
+        /*background: pink;*/
+    }
+    
+    .title {
+        padding: 2% 7%;
+        background: #eee;
+    }
+    
+    .content {
+        width: 70%;
+        margin: 20px auto 0;
+        padding-bottom: 50px;
+        background: #fff;
+    }
+    
+    h3 {
+        font-size: 50px;
+    }
+    
+    h3 span {
+        float: left;
+    }
+    
+    .preview {
+        width: 50%;
+        margin: 0 auto 20px;
+        /*background: red;*/
+        padding: 10px 40px 150px;
+        box-shadow: 0 2px 5px #666;
+        text-align: center;
+    }
+
+    .first-option,
+    .second-option,
+    .public-option,
+    .mobile-option {
+        width: 45%;
+        /*background: blue;*/
+    }
+
+    .mobile-option > h4 > span {
+        font-size: 13px;
+    }
+
+    .options {
+        padding: 7px 0;
+        line-height: 25px;
+    }
+
+    .options > span {
+        margin-right: 20px;
+        font-size: 15px;
+    }
+
+    .options > select {
+        float: right;
+        width: 55%;
+        height: 25px;
+    }
+
+    .launch-button {
+        cursor: pointer;
+        padding: 10px 20px;
+        background: #26A69A;
+        color: #fff;
+        font-size: 14px;
+        -webkit-transition: background 300ms;
+        -o-transition: background 300ms;
+        transition: background 300ms;
+    }
+    .launch-button:hover {
+        background: #2DBAAC;
+    }
+
+    .tip {
+        margin-bottom: 40px;
+        padding: 40px 0;
+        background: #eee;
+        text-align: center;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">
+            <h3>
+                <span class="dark">m</span>
+                <span class="bright">e</span>
+                <span class="dark">n</span>
+                <span class="bright">u</span>
+                <span class="dark">.js</span>
+                <div class="cf"></div>
+            </h3>
+        </div>
+        <div class="content">
+            <div class="preview">
+                <h4 class="dark">Preview</h4><br>
+                <div class="ve-menu">
+                    <ul class="ve-menu-pc">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">新闻</a>
+                            <ul>
+                                <li><a href="#">社会</a></li>
+                                <li><a href="#">科技</a></li>
+                                <li><a href="#">体育</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">体育</a>
+                            <ul>
+                                <li><a href="#">CBA</a></li>
+                                <li><a href="#">NBA</a></li>
+                                <li><a href="#">综合</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">娱乐</a>
+                            <ul>
+                                <li><a href="#">明星</a></li>
+                                <li><a href="#">图片</a></li>
+                                <li><a href="#">电影</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">其他</a></li>
+                    </ul>
+                </div>
+                <button class="launch-button">LAUNCH MENU</button>
+                <div class="cf"></div>
+            </div><br>
+            <div class="tip dark">在下方设置参数，点击上方启动按钮生效</div>
+            <div class="first-option fl">
+                <h4 class="dark">一级菜单参数示例：</h4><br>
+                <div class="options">
+                    <span>firstFontSize:</span>
+                    <select>
+                        <option value="16px">16px</option>
+                        <option value="15px">15px</option>
+                        <option value="14px">14px</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>firstFontColor:</span>
+                    <select>
+                        <option value="#fff">#fff</option>
+                        <option value="#000">#000</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>firstBgColor:</span>
+                    <select>
+                        <option value="#0E90D2">#0E90D2</option>
+                        <option value="#fff">#fff</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>firstHoverFontColor:</span>
+                    <select>
+                        <option value="#fff">#fff</option>
+                        <option value="#000">#000</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>firstHoverBgColor:</span>
+                    <select>
+                        <option value="#0C79B1">#0C79B1</option>
+                        <option value="#000">#000</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>itemMargin:</span>
+                    <select>
+                        <option value="1">1</option>
+                        <option value="2">5</option>
+                        <option value="0">0</option>
+                    </select>
+                </div>
+            </div>
+            <div class="second-option fr">
+                <h4 class="dark">二级菜单参数示例：</h4><br>
+                <div class="options">
+                    <span>secondFontSize:</span>
+                    <select>
+                        <option value="16px">16px</option>
+                        <option value="15px">15px</option>
+                        <option value="14px">14px</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>secondFontColor:</span>
+                    <select>
+                        <option value="#fff">#fff</option>
+                        <option value="#000">#000</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>secondBgColor:</span>
+                    <select>
+                        <option value="#0E90D2">#0E90D2</option>
+                        <option value="#000">#000</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>secondHoverFontColor:</span>
+                    <select>
+                        <option value="#fff">#fff</option>
+                        <option value="#000">#000</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>secondHoverBgColor:</span>
+                    <select>
+                        <option value="#0C79B1">#0C79B1</option>
+                        <option value="#000">#000</option>
+                    </select>
+                </div>
+            </div>
+            <div class="cf"></div><br>
+            <div class="public-option fl">
+                <h4 class="dark">一、二级公用参数示例：</h4><br>
+                <div class="options">
+                    <span>height:</span>
+                    <select>
+                        <option value="40">40</option>
+                        <option value="30">30</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>itemWidth:</span>
+                    <select>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>theme:</span>
+                    <select>
+                        <option value="blue">blue</option>
+                        <option value="dark">dark</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mobile-option fr">
+                <h4 class="dark">移动端参数示例：<span>（暂时不能动态改变，但它是有效的，你可以在初始化时设置）</span></h4><br>
+                <div class="options">
+                    <span>menuIconColor:</span>
+                    <select>
+                        <option value="#000">#000</option>
+                        <option value="#fff">#fff</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>menuMaskColor:</span>
+                    <select>
+                        <option value="#000">#000</option>
+                        <option value="#fff">#fff</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>mFirstBgColor:</span>
+                    <select>
+                        <option value="#000">#000</option>
+                        <option value="#fff">#fff</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>mFirstFontColor:</span>
+                    <select>
+                        <option value="#fff">#fff</option>
+                        <option value="#000">#000</option>
+                    </select>
+                </div>
+                 <div class="options">
+                    <span>mSecondFontColor:</span>
+                    <select>
+                        <option value="#fff">#fff</option>
+                        <option value="#000">#000</option>
+                    </select>
+                </div>
+                 <div class="options">
+                    <span>closeIconColor:</span>
+                    <select>
+                        <option value="#fff">#fff</option>
+                        <option value="#000">#000</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>animate:</span>
+                    <select>
+                        <option value="false">false</option>
+                        <option value="true">true</option>
+                    </select>
+                </div>
+                <div class="options">
+                    <span>speed:</span>
+                    <select>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
+                    </select>
+                </div>
+            </div>
+            <div class="cf"></div>
+        </div>
+    </div>
+    <script src="./dep/jquery-1.12.2.min.js"></script>
+    <script src="./src/menu.js"></script>
+    <script>
+        (function() {
+            $(function() {
+                $('.ve-menu').menu();
+                $(document).on('click', '.launch-button', function(event) {
+                    var options = {},
+                        itemWidth = 20,
+                        secHei = $('.ve-menu-pc').find('ul').css('top');
+                    $.each($('select'), function(index, val) {
+                        var key = $(this).prev().text();
+                        key = key.slice(0, key.length - 1);
+                        options[key] = $(this).val();
+                    });
+                    $('.ve-menu-pc').find('ul, li').removeAttr('style');
+                    $('.ve-menu-pc').find('ul').css('top', secHei);
+                    $('.ve-menu').menu(options);
+                });
+            })
+        })();
+    </script>
+</body>
+
+</html>
