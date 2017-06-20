@@ -57,11 +57,11 @@
   	- `animate: false`（小屏幕下的动画效果，默认关闭。暂时只支持：'fade'）
   	- `speed: 200`（小屏幕下的动画速度，随animate属性而开合。支持：'fade'，'slide'，单位：ms）  
 
-5. [效果展示](https://dreamon324.github.io/menu/demo.html)  
+5. [效果展示](https://zhangsilei.github.io/menu/demo.html)  
 
 ### 二、使用说明
 
-1. 获取 menu：[直接下载](https://github.com/DreamOn324/menu/archive/v0.16.zip)
+1. 获取 menu：[直接下载](https://github.com/zhangsilei/menu/archive/v0.16.zip)
 
 2. 引入 menu 样式  
 	```html
