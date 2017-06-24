@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>导航菜单组件</title>
     <link rel="stylesheet" href="./src/menu.css" />
@@ -18,7 +19,8 @@
     body {
         width: 100%;
         height: 100%;
-        font-family: Roboto, sans-serif;
+        font-family: Roboto, sans-serif; 
+        overflow-x: hidden;   
     }
     
     .cf {
@@ -135,6 +137,24 @@
         padding: 40px 0;
         background: #eee;
         text-align: center;
+    }
+    /* 移动端兼容 */
+    @media screen and (max-width: 1280px) {
+        .launch-button {
+            margin-top: 30px;
+        }
+        .first-option,
+        .second-option,
+        .public-option,
+        .mobile-option {
+            display: block;
+            width: 100%;
+        }
+        .second-option,
+        .public-option,
+        .mobile-option {
+            margin-top: 30px;
+        }
     }
     </style>
 </head>
@@ -367,15 +387,16 @@
                 $(document).on('click', '.launch-button', function(event) {
                     var options = {},
                         itemWidth = 20,
-                        secHei = $('.ve-menu-pc').find('ul').css('top');
+                        secHei = 0;
                     $.each($('select'), function(index, val) {
                         var key = $(this).prev().text();
                         key = key.slice(0, key.length - 1);
                         options[key] = $(this).val();
                     });
                     $('.ve-menu-pc').find('ul, li').removeAttr('style');
-                    $('.ve-menu-pc').find('ul').css('top', secHei);
                     $('.ve-menu').menu(options);
+                    secHei = $('.ve-menu-pc > li > a').height();
+                    $('.ve-menu-pc').find('ul').css('top', secHei);
                 });
             })
         })();
