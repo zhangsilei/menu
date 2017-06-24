@@ -1,8 +1,8 @@
-## menu Plugin V 0.16
+## menu Plugin V 0.17
 
-### V 0.16版本说明： 
-	修复无二级菜单时，一级菜单悬浮属性不生效bug；
-	修改小屏幕下右上角菜单按钮位置；
+### V 0.17版本说明： 
+	修复主题参数失效bug；
+	修复公共参数height导致的二级菜单高度间隙问题；
 
 <!-- ### 历史版本说明：
 
@@ -61,7 +61,7 @@
 
 ### 二、使用说明
 
-1. 获取 menu：[直接下载](https://github.com/zhangsilei/menu/archive/v0.16.zip)
+1. 获取 menu：[直接下载](https://github.com/zhangsilei/menu/archive/v0.17.zip)
 
 2. 引入 menu 样式  
 	```html
