@@ -2,6 +2,7 @@
  * @description 基于jQuery的轻量级响应式菜单
  * 
  * @author zhangsilei 
+ * @date 2017-06-24 修复主题参数失效bug，修复公共参数height导致的二级菜单高度间隙问题。
  * @date 2017-06-20 添加itemWidth类型容错校验
  */
 ;
@@ -60,12 +61,19 @@
         };
         this.settings = $.extend({}, this.defaults, options);
         this.settings.itemWidth = this.settings.itemWidth - 0; 
-        console.log(this.settings)
         this.isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);
     }
 
     // 原型链上加属性和方法
     Menu.prototype = {
+        init: function() {
+            this.setDefaultTheme()
+                .setDefinedTheme()
+                .setFirstMenu()
+                .setSecondMenu()
+                .responsiveLayout()
+                .supportFastClick();
+        },
         setDefaultTheme: function() {
             var _this = this;
             // 设置默认主题
@@ -110,6 +118,22 @@
             }
             return _this;
         },
+        setDefinedTheme: function() {
+            var theme = this.settings.theme;
+            if (theme && typeof theme == 'string') {
+                if (theme != 'blue') {
+                    this.settings.firstFontColor = this.themeColor[theme].fontColor;
+                    this.settings.firstBgColor = this.themeColor[theme].bgColor;
+                    this.settings.firstHoverFontColor = this.themeColor[theme].hoverFontColor;
+                    this.settings.firstHoverBgColor = this.themeColor[theme].hoverBgColor;
+                    this.settings.secondFontColor = this.themeColor[theme].fontColor;
+                    this.settings.secondBgColor = this.themeColor[theme].bgColor;
+                    this.settings.secondHoverFontColor = this.themeColor[theme].hoverFontColor;
+                    this.settings.secondHoverBgColor = this.themeColor[theme].hoverBgColor;
+                }
+            }
+            return this;
+        },
         setFirstMenu: function() {
             var _this = this;
             $firstLinks.css({
@@ -135,7 +159,10 @@
                     fontSize: _this.settings.secondFontSize,
                     color: _this.settings.secondFontColor,
                     backgroundColor: _this.settings.secondBgColor
-                });
+                }).parent('li').css({
+                    height: _this.settings.height,
+                    lineHeight: _this.settings.height + 'px'
+                })
                 // 二级菜单宽度
                 $.each($firstLinks, function(index, val) {
                     var $secondMenu = $(this).next('ul');
@@ -320,11 +347,7 @@
     // 将插件挂到jQuery下并初始化
     $.fn.menu = function(options) {
         var menu = new Menu(options);
-        menu.setDefaultTheme()
-            .setFirstMenu()
-            .setSecondMenu()
-            .responsiveLayout()
-            .supportFastClick();
+        menu.init();
         $(window).resize(function(event) {
             menu.responsiveLayout()
         });
