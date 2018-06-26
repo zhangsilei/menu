@@ -1,12 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Test menu.js</title>
+    <title>Test Menu.js</title>
+    <!-- Menu.js 样式 -->
+    <link rel="stylesheet" href="./src/menu.css">
 </head>
+
 <body>
-    
+
+    <div class="ve-menu">
+        <ul class="ve-menu-pc">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">购物</a>
+                <ul>
+                    <li><a href="#">淘宝</a></li>
+                    <li><a href="#">亚马逊</a></li>
+                    <li><a href="#">京东</a></li>
+                </ul>
+            </li>
+            <li><a href="#">博客</a></li>
+            <li><a href="#">帮助与支持</a></li>
+        </ul>
+    </div>
+
+    <!-- Menu.js 依赖 -->
+    <script src="./lib/jquery-1.12.2.min.js"></script>
+    <script src="./lib/fastclick.js"></script>
+    <!-- Menu.js 脚本 -->
+    <script src="./src/menu.js"></script>
+
+    <script>
+        $('.ve-menu').menu({
+            firstFontSize: 14,
+            firstFontColor: '#333',
+            firstBgColor: '#fff', 
+            firstHoverFontColor: '#2e76ef',
+            firstHoverBgColor: '#fff',
+            itemMargin: 5,
+            secondFontSize: 14,
+            itemWidth: 40,
+            animate: 'slide',
+            speed: 500
+        });
+    </script>
 </body>
+
 </html>
