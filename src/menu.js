@@ -1,12 +1,13 @@
 /**
- * @description 基于jQuery的轻量级响应式菜单
+ * Menu.js v0.17
+ * (c) 2015-2018 zhangsilei
  * 
- * @author zhangsilei 
- * @date 2017-06-24 修复主题参数失效bug，修复公共参数height导致的二级菜单高度间隙问题。
- * @date 2017-06-20 添加itemWidth类型容错校验
+ * 基于jQuery的轻量级响应式菜单插件
  */
+
 ;
 (function($, w) {
+    'use strict';
 
     // 页面元素
     var $firstMenu = $('.ve-menu-pc'),
@@ -60,7 +61,7 @@
             speed: 200
         };
         this.settings = $.extend({}, this.defaults, options);
-        this.settings.itemWidth = this.settings.itemWidth - 0; 
+        this.settings.itemWidth = this.settings.itemWidth - 0;
         this.isMobile = !!navigator.userAgent.match(/AppleWebKit.*Mobile.*/);
     }
 
@@ -154,16 +155,16 @@
             var _this = this;
             if (hasSecond) {
                 $sencondLinks.css({
-                    height: _this.settings.height,
-                    lineHeight: _this.settings.height + 'px',
-                    fontSize: _this.settings.subFontSize,
-                    color: _this.settings.subFontColor,
-                    backgroundColor: _this.settings.subBgColor
-                }).parent('li').css({
-                    height: _this.settings.height,
-                    lineHeight: _this.settings.height + 'px'
-                })
-                // 二级菜单宽度
+                        height: _this.settings.height,
+                        lineHeight: _this.settings.height + 'px',
+                        fontSize: _this.settings.subFontSize,
+                        color: _this.settings.subFontColor,
+                        backgroundColor: _this.settings.subBgColor
+                    }).parent('li').css({
+                        height: _this.settings.height,
+                        lineHeight: _this.settings.height + 'px'
+                    })
+                    // 二级菜单宽度
                 $.each($firstLinks, function(index, val) {
                     var $secondMenu = $(this).next('ul');
                     $secondMenu.css('top', _this.settings.height);
@@ -236,7 +237,6 @@
                                     .removeAttr('style');
                             }
 
-                            // TODO 将动画速度设为插件的参数
                             // 动画显示一级菜单和遮罩层
                             if (animate) {
                                 _this.animate($('.ve-menu-mask'), animate, _this.settings.speed, 'open');
