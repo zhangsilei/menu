@@ -32,29 +32,29 @@
             }
         };
         this.defaults = {
-            firstFontSize: '16px',
-            firstFontColor: this.themeColor.blue.fontColor,
-            firstBgColor: this.themeColor.blue.bgColor,
-            firstHoverFontColor: this.themeColor.blue.hoverFontColor,
-            firstHoverBgColor: this.themeColor.blue.hoverBgColor,
+            fontSize: '16px',
+            fontColor: this.themeColor.blue.fontColor,
+            bgColor: this.themeColor.blue.bgColor,
+            hoverFontColor: this.themeColor.blue.hoverFontColor,
+            hoverBgColor: this.themeColor.blue.hoverBgColor,
 
-            secondFontSize: '16px',
-            secondFontColor: this.themeColor.blue.fontColor,
-            secondBgColor: this.themeColor.blue.bgColor,
-            secondHoverFontColor: this.themeColor.blue.hoverFontColor,
-            secondHoverBgColor: this.themeColor.blue.hoverBgColor,
+            subFontSize: '16px',
+            subFontColor: this.themeColor.blue.fontColor,
+            subBgColor: this.themeColor.blue.bgColor,
+            subHoverFontColor: this.themeColor.blue.hoverFontColor,
+            subHoverBgColor: this.themeColor.blue.hoverBgColor,
 
             height: 40,
             itemWidth: 20,
-            itemMargin: 1,
+            itemSpace: 1,
             theme: 'blue',
-            menuIconColor: '#000',
-            menuMaskColor: '#000',
-            mFirstBgColor: '#000',
-            mFirstFontColor: '#fff',
-            mSecondBgColor: '#222',
-            mSecondFontColor: '#fff',
-            closeIconColor: '#fff',
+            mMenuBtnColor: '#000',
+            mMaskColor: '#000',
+            mBgColor: '#000',
+            mFontColor: '#fff',
+            mSubBgColor: '#222',
+            mSubFontColor: '#fff',
+            mCloseBtnColor: '#fff',
 
             animate: false,
             speed: 200
@@ -122,14 +122,14 @@
             var theme = this.settings.theme;
             if (theme && typeof theme == 'string') {
                 if (theme != 'blue') {
-                    this.settings.firstFontColor = this.themeColor[theme].fontColor;
-                    this.settings.firstBgColor = this.themeColor[theme].bgColor;
-                    this.settings.firstHoverFontColor = this.themeColor[theme].hoverFontColor;
-                    this.settings.firstHoverBgColor = this.themeColor[theme].hoverBgColor;
-                    this.settings.secondFontColor = this.themeColor[theme].fontColor;
-                    this.settings.secondBgColor = this.themeColor[theme].bgColor;
-                    this.settings.secondHoverFontColor = this.themeColor[theme].hoverFontColor;
-                    this.settings.secondHoverBgColor = this.themeColor[theme].hoverBgColor;
+                    this.settings.fontColor = this.themeColor[theme].fontColor;
+                    this.settings.bgColor = this.themeColor[theme].bgColor;
+                    this.settings.hoverFontColor = this.themeColor[theme].hoverFontColor;
+                    this.settings.hoverBgColor = this.themeColor[theme].hoverBgColor;
+                    this.settings.subFontColor = this.themeColor[theme].fontColor;
+                    this.settings.subBgColor = this.themeColor[theme].bgColor;
+                    this.settings.subHoverFontColor = this.themeColor[theme].hoverFontColor;
+                    this.settings.subHoverBgColor = this.themeColor[theme].hoverBgColor;
                 }
             }
             return this;
@@ -139,14 +139,14 @@
             $firstLinks.css({
                 height: _this.settings.height,
                 lineHeight: _this.settings.height + 'px',
-                fontSize: _this.settings.firstFontSize,
-                color: _this.settings.firstFontColor,
-                backgroundColor: _this.settings.firstBgColor
+                fontSize: _this.settings.fontSize,
+                color: _this.settings.fontColor,
+                backgroundColor: _this.settings.bgColor
             }).parent('li').each(function(index, el) {
                 var $this = $(this);
                 $this.width($this.width() + _this.settings.itemWidth); // 一级菜单宽度
             }).not($firstMenu.children('li').first()).css({
-                marginLeft: this.settings.itemMargin + 'px' // 菜单间隙
+                marginLeft: this.settings.itemSpace + 'px' // 菜单间隙
             });
             return _this;
         },
@@ -156,9 +156,9 @@
                 $sencondLinks.css({
                     height: _this.settings.height,
                     lineHeight: _this.settings.height + 'px',
-                    fontSize: _this.settings.secondFontSize,
-                    color: _this.settings.secondFontColor,
-                    backgroundColor: _this.settings.secondBgColor
+                    fontSize: _this.settings.subFontSize,
+                    color: _this.settings.subFontColor,
+                    backgroundColor: _this.settings.subBgColor
                 }).parent('li').css({
                     height: _this.settings.height,
                     lineHeight: _this.settings.height + 'px'
@@ -181,35 +181,35 @@
             // 一级菜单样式
             $firstLinks.hover(function() {
                 $(this).css({
-                    color: _this.settings.firstHoverFontColor,
-                    backgroundColor: _this.settings.firstHoverBgColor
+                    color: _this.settings.hoverFontColor,
+                    backgroundColor: _this.settings.hoverBgColor
                 })
             }, function() {
                 $(this).css({
-                    color: _this.settings.firstFontColor,
-                    backgroundColor: _this.settings.firstBgColor
+                    color: _this.settings.fontColor,
+                    backgroundColor: _this.settings.bgColor
                 })
             });
             // 二级菜单样式
             $sencondLinks.hover(function() {
                 var $this = $(this);
                 $this.css({
-                    color: _this.settings.secondHoverFontColor,
-                    backgroundColor: _this.settings.secondHoverBgColor
+                    color: _this.settings.subHoverFontColor,
+                    backgroundColor: _this.settings.subHoverBgColor
                 });
                 $this.parents('ul').first().prev().css({
-                    color: _this.settings.firstHoverFontColor,
-                    backgroundColor: _this.settings.firstHoverBgColor
+                    color: _this.settings.hoverFontColor,
+                    backgroundColor: _this.settings.hoverBgColor
                 });
             }, function() {
                 var $this = $(this);
                 $this.css({
-                    color: _this.settings.secondFontColor,
-                    backgroundColor: _this.settings.secondBgColor
+                    color: _this.settings.subFontColor,
+                    backgroundColor: _this.settings.subBgColor
                 });
                 $this.parents('ul').first().prev().css({
-                    color: _this.settings.firstFontColor,
-                    backgroundColor: _this.settings.firstBgColor
+                    color: _this.settings.fontColor,
+                    backgroundColor: _this.settings.bgColor
                 });
             });
         },
@@ -230,7 +230,7 @@
                             // 创建遮罩和一、二级菜单
                             if (!$('.ve-menu-mask').length && !$('.ve-menu-mobile').length) {
                                 $('<div class="ve-menu-mask"></div>')
-                                    .css('background', _this.settings.menuMaskColor).appendTo('.ve-menu')
+                                    .css('background', _this.settings.mMaskColor).appendTo('.ve-menu')
                                     .after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
                                     .next().find('ul, li, a')
                                     .removeAttr('style');
@@ -250,8 +250,8 @@
                             $('.ve-menu-mobile > li').not('.ve-menu-close')
                                 .find('ul').find('a')
                                 .css({ //  二级菜单样式
-                                    background: _this.settings.mSecondBgColor,
-                                    color: _this.settings.mSecondFontColor
+                                    background: _this.settings.mSubBgColor,
+                                    color: _this.settings.mSubFontColor
                                 });
 
                             // 一级菜单点击事件，每次打开一级菜单时重新绑定，防止重复
@@ -269,7 +269,7 @@
                                 });
 
                             // 关闭按钮样式、点击事件
-                            $('.ve-menu-close').css('color', _this.settings.closeIconColor)
+                            $('.ve-menu-close').css('color', _this.settings.mCloseBtnColor)
                                 .children('div')
                                 .on('click', function() {
                                     // 动画结束
@@ -283,7 +283,7 @@
                                 });
                         })
                         .children('div')
-                        .css('background', _this.settings.menuIconColor);
+                        .css('background', _this.settings.mMenuBtnColor);
                 } else {
                     $firstMenu.hide();
                     $menuIcon.show();
@@ -354,4 +354,4 @@
         return this;
     }
 
-})(jQuery, window)
+})(jQuery, window);
