@@ -91,18 +91,18 @@
 4. 粘贴html代码块  
 	```html
 	<div class="ve-menu">     
-		<ul class="ve-menu-pc">
-			<li><a href="#">link</a></li>
-			<li><a href="#">link</a>
-				<ul>  
-					<li><a href="#">aaa</a></li>
-					<li><a href="#">bbb</a></li>
-					<li><a href="#">ccc</a></li> 
-				</ul>
-			</li>
-			<li><a href="#">link</a></li>
-			<li><a href="#">link</a></li>
-		</ul>
+	  <ul class="ve-menu-pc">
+	    <li><a href="#">link</a></li>
+	    <li><a href="#">link</a>
+		  <ul>  
+		    <li><a href="#">aaa</a></li>
+		    <li><a href="#">bbb</a></li>
+		    <li><a href="#">ccc</a></li> 
+		  </ul>
+	    </li>
+	    <li><a href="#">link</a></li>
+	    <li><a href="#">link</a></li>
+	  </ul>
 	</div>
 	  ```
   
