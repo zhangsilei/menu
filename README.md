@@ -75,7 +75,7 @@
 
 ### 二、使用说明
 
-1. 获取 menu：[直接下载](https://github.com/zhangsilei/menu/archive/v0.17.zip)
+1. 获取 menu：[直接下载](https://github.com/zhangsilei/menu/archive/v0.17.1.zip)
 
 2. 引入 menu 样式  
 	```html
