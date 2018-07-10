@@ -60,8 +60,8 @@
 
 	*二级菜单参数示例：*  
 
-	- `mSecondBgColor: '#000'`（背景颜色）  
-	- `mSecondFontColor: '#000'`（字体颜色）  
+	- `mSubBgColor: '#000'`（背景颜色）  
+	- `mSubFontColor: '#000'`（字体颜色）  
 
 	*公用参数示例：*  
 	

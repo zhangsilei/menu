@@ -33,6 +33,7 @@
             }
         };
         this.defaults = {
+            // PC 端参数
             fontSize: '16px',
             fontColor: this.themeColor.blue.fontColor,
             bgColor: this.themeColor.blue.bgColor,
@@ -44,21 +45,26 @@
             subBgColor: this.themeColor.blue.bgColor,
             subHoverFontColor: this.themeColor.blue.hoverFontColor,
             subHoverBgColor: this.themeColor.blue.hoverBgColor,
+            
+            transition: true,
 
-            height: 40,
-            itemWidth: 20,
-            itemSpace: 1,
-            theme: 'blue',
+            // 移动端参数
             mMenuBtnColor: '#000',
+            mMenuBtnFloat: 'right',
             mMaskColor: '#000',
             mBgColor: '#000',
             mFontColor: '#fff',
             mSubBgColor: '#222',
             mSubFontColor: '#fff',
             mCloseBtnColor: '#fff',
-
             animate: false,
-            speed: 200
+            speed: 200,
+
+            // 公共参数
+            height: 40,
+            itemWidth: 20,
+            itemSpace: 1,
+            theme: 'blue'
         };
         this.settings = $.extend({}, this.defaults, options);
         this.settings.itemWidth = this.settings.itemWidth - 0;
@@ -75,6 +81,7 @@
                 .responsiveLayout()
                 .supportFastClick();
         },
+
         setDefaultTheme: function() {
             var _this = this;
             // 设置默认主题
@@ -119,6 +126,7 @@
             }
             return _this;
         },
+
         setDefinedTheme: function() {
             var theme = this.settings.theme;
             if (theme && typeof theme == 'string') {
@@ -135,6 +143,7 @@
             }
             return this;
         },
+
         setFirstMenu: function() {
             var _this = this;
             $firstLinks.css({
@@ -151,6 +160,7 @@
             });
             return _this;
         },
+
         setSecondMenu: function() {
             var _this = this;
             if (hasSecond) {
@@ -177,6 +187,7 @@
             }
             return _this;
         },
+
         setHoverCss: function() {
             var _this = this;
             // 一级菜单样式
@@ -214,89 +225,102 @@
                 });
             });
         },
+
         responsiveLayout: function() {
-            var _this = this,
-                screenWidth = $(w).width(),
-                $menuIcon = $('.ve-menu-icon'),
-                animate = _this.settings.animate;
+            var _this = this;
+            var screenWidth = $(w).width();
+
             if (screenWidth <= 768) {
-                if (!$menuIcon.length) {
-                    // 隐藏原菜单
+                if (!$('.ve-menu-icon').length) {
+                    // 隐藏 PC 菜单
                     $firstMenu.hide();
                     // 添加菜单按钮
                     $firstMenu.after('<div class="ve-menu-icon"><div></div><div></div><div></div></div>');
-                    $menuIcon = $('.ve-menu-icon');
-                    $menuIcon.css('marginTop', 10)
-                        .on('click', function() {
-                            // 创建遮罩和一、二级菜单
-                            if (!$('.ve-menu-mask').length && !$('.ve-menu-mobile').length) {
-                                $('<div class="ve-menu-mask"></div>')
-                                    .css('background', _this.settings.mMaskColor).appendTo('.ve-menu')
-                                    .after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
-                                    .next().find('ul, li, a')
-                                    .removeAttr('style');
-                            }
-
-                            // 动画显示一级菜单和遮罩层
-                            if (animate) {
-                                _this.animate($('.ve-menu-mask'), animate, _this.settings.speed, 'open');
-                                _this.animate($('.ve-menu-mobile'), animate, _this.settings.speed, 'open');
-                            } else {
-                                $('.ve-menu-mask').show();
-                                $('.ve-menu-mobile').show();
-                            }
-
-                            // 二级菜单样式
-                            $('.ve-menu-mobile > li').not('.ve-menu-close')
-                                .find('ul').find('a')
-                                .css({ //  二级菜单样式
-                                    background: _this.settings.mSubBgColor,
-                                    color: _this.settings.mSubFontColor
-                                });
-
-                            // 一级菜单点击事件，每次打开一级菜单时重新绑定，防止重复
-                            $('.ve-menu-mobile > li').not('.ve-menu-close')
-                                .unbind('click')
-                                .on('click', function(e) {
-                                    // 暂时不支持自定义动画，默认为toggle动效
-                                    // TODO 添加自定义动画
-                                    // 二级菜单动画
-                                    if (animate) {
-                                        $(this).find('ul').toggle(150);
-                                    } else {
-                                        $(this).find('ul').toggle();
-                                    }
-                                });
-
-                            // 关闭按钮样式、点击事件
-                            $('.ve-menu-close').css('color', _this.settings.mCloseBtnColor)
-                                .children('div')
-                                .on('click', function() {
-                                    // 动画结束
-                                    if (animate) {
-                                        _this.animate($('.ve-menu-mask'), animate, _this.settings.speed, 'close');
-                                        _this.animate($('.ve-menu-mobile'), animate, _this.settings.speed, 'close');
-                                    } else {
-                                        $('.ve-menu-mask').hide();
-                                        $('.ve-menu-mobile').hide();
-                                    }
-                                });
-                        })
-                        .children('div')
+                    // 设置菜单按钮样式
+                    _this.setMenuStyle();
+                    // 为菜单按钮添加事件
+                    _this.addMenuListener();
+                    $('.ve-menu-icon').children('div')
                         .css('background', _this.settings.mMenuBtnColor);
                 } else {
                     $firstMenu.hide();
-                    $menuIcon.show();
+                    $('.ve-menu-icon').show();
                 }
             } else {
-                if ($menuIcon.length) {
+                if ($('.ve-menu-icon').length) {
                     $firstMenu.show();
-                    $menuIcon.hide();
+                    $('.ve-menu-icon').hide();
                 }
             }
 
             return _this;
         },
+
+        setMenuStyle: function() {
+            $('.ve-menu-icon').css('marginTop', 10);
+        },
+
+        addMenuListener: function() {
+            var _this = this;
+            var animate = _this.settings.animate;
+
+            $('.ve-menu-icon').on('click', function() {
+                // 创建遮罩和一、二级菜单
+                if (!$('.ve-menu-mask').length && !$('.ve-menu-mobile').length) {
+                    $('<div class="ve-menu-mask"></div>')
+                        .css('background', _this.settings.mMaskColor).appendTo('.ve-menu')
+                        .after('<ul class="ve-menu-mobile"><li class="ve-menu-close"><div></div></li>' + $firstMenu.html() + '</ul>')
+                        .next().find('ul, li, a')
+                        .removeAttr('style');
+                }
+
+                // 动画显示一级菜单和遮罩层
+                if (animate) {
+                    _this.animate($('.ve-menu-mask'), animate, _this.settings.speed, 'open');
+                    _this.animate($('.ve-menu-mobile'), animate, _this.settings.speed, 'open');
+                } else {
+                    $('.ve-menu-mask').show();
+                    $('.ve-menu-mobile').show();
+                }
+
+                // 二级菜单样式
+                $('.ve-menu-mobile > li').not('.ve-menu-close')
+                    .find('ul').find('a')
+                    .css({ //  二级菜单样式
+                        background: _this.settings.mSubBgColor,
+                        color: _this.settings.mSubFontColor
+                    });
+
+                // 一级菜单点击事件，每次打开一级菜单时重新绑定，防止重复
+                $('.ve-menu-mobile > li').not('.ve-menu-close')
+                    .unbind('click')
+                    .on('click', function(e) {
+                        // 暂时不支持自定义动画，默认为toggle动效
+                        // TODO 添加自定义动画
+                        // 二级菜单动画
+                        if (animate) {
+                            $(this).find('ul').toggle(150);
+                        } else {
+                            $(this).find('ul').toggle();
+                        }
+                    });
+
+                // 关闭按钮样式、点击事件
+                $('.ve-menu-close').css('color', _this.settings.mCloseBtnColor)
+                    .children('div')
+                    .on('click', function() {
+                        // 动画结束
+                        if (animate) {
+                            _this.animate($('.ve-menu-mask'), animate, _this.settings.speed, 'close');
+                            _this.animate($('.ve-menu-mobile'), animate, _this.settings.speed, 'close');
+                        } else {
+                            $('.ve-menu-mask').hide();
+                            $('.ve-menu-mobile').hide();
+                        }
+                    });
+            });
+        },
+
         supportFastClick: function() {
             if (this.isMobile) { // 在移动端打开页面，将事件触发改为click
                 try {
@@ -313,6 +337,7 @@
             }
             return this;
         },
+
         animate: function($ele, type, speed, openOrClose) {
             var startStyle = {},
                 endStyle = {};
